@@ -1,0 +1,27 @@
+# Android build
+app/build/
+.gradle/
+local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Dependencies
+node_modules/
+
+# Claude Code internal
+.claude/
+
+# Backup
+*_bak/

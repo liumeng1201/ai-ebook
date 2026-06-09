@@ -1,0 +1,9 @@
+[submodule "CodexGuide"]
+	path = CodexGuide
+	url = https://github.com/freestylefly/CodexGuide.git
+[submodule "easy-vibe"]
+	path = easy-vibe
+	url = https://github.com/datawhalechina/easy-vibe.git
+[submodule "vibe-vibe"]
+	path = vibe-vibe
+	url = https://github.com/datawhalechina/vibe-vibe.git
