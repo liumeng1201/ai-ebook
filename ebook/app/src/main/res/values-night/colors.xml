@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_text">#E0E0E0</color>
+    <color name="divider_color">#424242</color>
+    <color name="current_chapter">#64B5F6</color>
+    <color name="primary_color">#1565C0</color>
+    <color name="on_primary_color">#FFFFFF</color>
+    <color name="surface_color">#121212</color>
+    <color name="on_surface_color">#E0E0E0</color>
+    <color name="on_surface_variant_color">#9E9E9E</color>
+    <!-- Toolbar: 浅黑与内容区域略微区分 -->
+    <color name="toolbar_color_dark">#1E1E1E</color>
+    <color name="on_toolbar_color_dark">#E0E0E0</color>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="dividerColor" format="color" />
+    <attr name="colorOnSurfaceVariant" format="color" />
+    <attr name="toolbarColor" format="color" />
+    <attr name="onToolbarColor" format="color" />
+</resources>
