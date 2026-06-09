@@ -3,207 +3,207 @@
   "part": [
     {
       "name": "基础篇",
-      "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/index.md",
+      "herf": "vibe-vibe/docs/Basic/index.md",
       "chapter": [
         {
           "name": "第 0 章：开始前 —— 你会做出什么，怎么学，卡住怎么办",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/00-preface/index.md",
+          "herf": "vibe-vibe/docs/Basic/00-preface/index.md",
           "section": [
             {
               "name": "0.1 这本教程在教什么，以及你会做出什么",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/00-preface/0.1-start-here.md"
+              "herf": "vibe-vibe/docs/Basic/00-preface/0.1-start-here.md"
             },
             {
               "name": "0.2 谁适合学，以及怎么学最有效",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/00-preface/0.2-what-you-will-build.md"
+              "herf": "vibe-vibe/docs/Basic/00-preface/0.2-what-you-will-build.md"
             },
             {
               "name": "0.3 卡住时怎么办：基础版统一求助流程",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/00-preface/0.3-who-this-is-for.md"
+              "herf": "vibe-vibe/docs/Basic/00-preface/0.3-who-this-is-for.md"
             },
             {
               "name": "0.4 本章小结：基础版学习地图",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/00-preface/0.4-how-to-learn.md"
+              "herf": "vibe-vibe/docs/Basic/00-preface/0.4-how-to-learn.md"
             }
           ]
         },
         {
           "name": "第 1 章：第一个版本 —— 2 小时做出你的个人主页 + 数字分身",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/01-awakening/index.md",
+          "herf": "vibe-vibe/docs/Basic/01-awakening/index.md",
           "section": [
             {
               "name": "1.1 为什么从这一章开始，以及先准备什么",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/01-awakening/1.1-coder-to-commander.md"
+              "herf": "vibe-vibe/docs/Basic/01-awakening/1.1-coder-to-commander.md"
             },
             {
               "name": "1.2 用填空式模板写出第一版需求",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/01-awakening/1.2-breaking-myths.md"
+              "herf": "vibe-vibe/docs/Basic/01-awakening/1.2-breaking-myths.md"
             },
             {
               "name": "1.3 在平台里生成你的第一个版本，并完成三轮微调",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/01-awakening/1.3-tools-guide.md"
+              "herf": "vibe-vibe/docs/Basic/01-awakening/1.3-tools-guide.md"
             },
             {
               "name": "1.4 本章小结：第一轮验收与下一轮优化清单",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/01-awakening/1.4-vibe-vs-spec.md"
+              "herf": "vibe-vibe/docs/Basic/01-awakening/1.4-vibe-vs-spec.md"
             }
           ]
         },
         {
           "name": "第 2 章：带回自己的工作台 —— 从平台到本地",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/02-mindset/index.md",
+          "herf": "vibe-vibe/docs/Basic/02-mindset/index.md",
           "section": [
             {
               "name": "2.1 为什么要把项目带回本地，以及如何把它导出下来",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/02-mindset/2.1-thinking-upgrade.md"
+              "herf": "vibe-vibe/docs/Basic/02-mindset/2.1-thinking-upgrade.md"
             },
             {
               "name": "2.2 用 AI IDE 打开它，并先认识最关键的几部分",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/02-mindset/2.2-inversion-thinking.md"
+              "herf": "vibe-vibe/docs/Basic/02-mindset/2.2-inversion-thinking.md"
             },
             {
               "name": "2.3 完成一次最小修改，并学会 3 类高频提问",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/02-mindset/2.3-subtraction-thinking.md"
+              "herf": "vibe-vibe/docs/Basic/02-mindset/2.3-subtraction-thinking.md"
             },
             {
               "name": "2.4 本章小结：你的本地工作台已经搭好",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/02-mindset/2.4-story-thinking.md"
+              "herf": "vibe-vibe/docs/Basic/02-mindset/2.4-story-thinking.md"
             }
           ]
         },
         {
           "name": "第 3 章：做好第一印象 —— 界面、风格与更有效的需求表达",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/03-technique/index.md",
+          "herf": "vibe-vibe/docs/Basic/03-technique/index.md",
           "section": [
             {
               "name": "3.1 为什么先改界面，以及先选一个清晰的风格方向",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/03-technique/3.1-prompt-basics.md"
+              "herf": "vibe-vibe/docs/Basic/03-technique/3.1-prompt-basics.md"
             },
             {
               "name": "3.2 三个最值回票价的界面改动",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/03-technique/3.2-structured-frameworks.md"
+              "herf": "vibe-vibe/docs/Basic/03-technique/3.2-structured-frameworks.md"
             },
             {
               "name": "3.3 用更清晰的话告诉 AI 你想怎么改，并兼顾好不好用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/03-technique/3.3-advanced-techniques.md"
+              "herf": "vibe-vibe/docs/Basic/03-technique/3.3-advanced-techniques.md"
             },
             {
               "name": "3.4 本章小结：你的首页已经像一个作品",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/03-technique/3.4-first-prd.md"
+              "herf": "vibe-vibe/docs/Basic/03-technique/3.4-first-prd.md"
             }
           ]
         },
         {
           "name": "第 4 章：让主页更完整 —— 内容、引导与基础存档",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/04-practice-0-to-1/index.md",
+          "herf": "vibe-vibe/docs/Basic/04-practice-0-to-1/index.md",
           "section": [
             {
               "name": "4.1 为什么先学“存档”，以及 Git 的最小闭环",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/04-practice-0-to-1/4.1-before-start.md"
+              "herf": "vibe-vibe/docs/Basic/04-practice-0-to-1/4.1-before-start.md"
             },
             {
               "name": "4.2 从访客视角决定你要补什么内容",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/04-practice-0-to-1/4.2-build-page.md"
+              "herf": "vibe-vibe/docs/Basic/04-practice-0-to-1/4.2-build-page.md"
             },
             {
               "name": "4.3 只添加 2 3 个最有价值的内容模块，并让数字分身更容易被使用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/04-practice-0-to-1/4.3-core-features.md"
+              "herf": "vibe-vibe/docs/Basic/04-practice-0-to-1/4.3-core-features.md"
             },
             {
               "name": "4.4 本章小结：主页更完整，也更可回退",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/04-practice-0-to-1/4.4-data-storage.md"
+              "herf": "vibe-vibe/docs/Basic/04-practice-0-to-1/4.4-data-storage.md"
             }
           ]
         },
         {
           "name": "第 5 章：让数字分身更像你 —— 人设、回答与排错",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/05-advanced/index.md",
+          "herf": "vibe-vibe/docs/Basic/05-advanced/index.md",
           "section": [
             {
               "name": "5.1 为什么“像你”比“更聪明”更重要，以及先用一句人话理解背后发生了什么",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/05-advanced/5.1-version-control.md"
+              "herf": "vibe-vibe/docs/Basic/05-advanced/5.1-version-control.md"
             },
             {
               "name": "5.2 写第一版“数字分身说明书”，并用 1 3 组真实材料校准它",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/05-advanced/5.2-deployment.md"
+              "herf": "vibe-vibe/docs/Basic/05-advanced/5.2-deployment.md"
             },
             {
               "name": "5.3 四类最常见问题，以及成本与安全的最小意识",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/05-advanced/5.3-security.md"
+              "herf": "vibe-vibe/docs/Basic/05-advanced/5.3-security.md"
             },
             {
               "name": "5.4 本章小结：它已经能更稳地代表你",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/05-advanced/5.4-iteration.md"
+              "herf": "vibe-vibe/docs/Basic/05-advanced/5.4-iteration.md"
             }
           ]
         },
         {
           "name": "第 6 章：正式上线 —— 部署、分享与第一轮真实反馈",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/06-launch/index.md",
+          "herf": "vibe-vibe/docs/Basic/06-launch/index.md",
           "section": [
             {
               "name": "6.1 为什么把“上线”放在最后，以及上线前检查",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/06-launch/6.1-preflight.md"
+              "herf": "vibe-vibe/docs/Basic/06-launch/6.1-preflight.md"
             },
             {
               "name": "6.2 把代码推到远程仓库，并用 EdgeOne Pages 完成部署",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/06-launch/6.2-deploy.md"
+              "herf": "vibe-vibe/docs/Basic/06-launch/6.2-deploy.md"
             },
             {
               "name": "6.3 上线后自测，并收集第一轮真实反馈",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/06-launch/6.3-feedback.md"
+              "herf": "vibe-vibe/docs/Basic/06-launch/6.3-feedback.md"
             },
             {
               "name": "6.4 基础版收束：你已经从“有想法”走到了“有作品”",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/06-launch/6.4-wrap-up.md"
+              "herf": "vibe-vibe/docs/Basic/06-launch/6.4-wrap-up.md"
             }
           ]
         },
         {
           "name": "附录",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/index.md",
+          "herf": "vibe-vibe/docs/Basic/99-appendix/index.md",
           "section": [
             {
               "name": "A. 常用提示词模板",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/a-prompt-cheatsheet.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/a-prompt-cheatsheet.md"
             },
             {
               "name": "B. 常见错误与“问 AI”流程",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/b-errors-and-asking-ai.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/b-errors-and-asking-ai.md"
             },
             {
               "name": "C. UI 速查卡",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/c-ui-cheatsheet.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/c-ui-cheatsheet.md"
             },
             {
               "name": "D. Git 最小操作卡",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/d-git-minimal-card.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/d-git-minimal-card.md"
             },
             {
               "name": "E. API Key、环境变量与基础安全",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/e-api-key-env-security.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/e-api-key-env-security.md"
             },
             {
               "name": "F. Vibe Coding 的能与不能",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/f-vibe-coding-can-and-cannot.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/f-vibe-coding-can-and-cannot.md"
             },
             {
               "name": "G. 进阶版跳转地图",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/99-appendix/g-advanced-jump-map.md"
+              "herf": "vibe-vibe/docs/Basic/99-appendix/g-advanced-jump-map.md"
             }
           ]
         },
         {
           "name": "结语：给未来的你",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/100-epilogue/index.md"
+          "herf": "vibe-vibe/docs/Basic/100-epilogue/index.md"
         },
         {
           "name": "下部预告：Vibe Coding 全栈实战教程",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/101-next-part/index.md",
+          "herf": "vibe-vibe/docs/Basic/101-next-part/index.md",
           "section": [
             {
               "name": "进阶版核心内容详解",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Basic/101-next-part/preview-advanced-content.md"
+              "herf": "vibe-vibe/docs/Basic/101-next-part/preview-advanced-content.md"
             }
           ]
         }
@@ -211,669 +211,669 @@
     },
     {
       "name": "进阶篇",
-      "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/index.md",
+      "herf": "vibe-vibe/docs/Advanced/index.md",
       "chapter": [
         {
           "name": "5 分钟搭建云端开发环境",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/web-ide.md"
+          "herf": "vibe-vibe/docs/Advanced/web-ide.md"
         },
         {
           "name": "随时随地 AI 编程",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/happy-coder.md"
+          "herf": "vibe-vibe/docs/Advanced/happy-coder.md"
         },
         {
           "name": "第一章：环境搭建与代码运行基础",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/index.md",
+          "herf": "vibe-vibe/docs/Advanced/01-environment-setup/index.md",
           "section": [
             {
               "name": "1.0 快速开始",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/00-quick-start.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/00-quick-start.md"
             },
             {
               "name": "1.1 代码格式演变",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/01-code-formats.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/01-code-formats.md"
             },
             {
               "name": "1.2 技术栈概念",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/02-tech-stack.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/02-tech-stack.md"
             },
             {
               "name": "1.3 浏览器与服务器基础",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/03-browser-server.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/03-browser-server.md"
             },
             {
               "name": "1.4 Terminal 终端入门",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/04-terminal-basics.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/04-terminal-basics.md"
             },
             {
               "name": "1.5 包管理与项目配置",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/05-package-manager-and-config.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/05-package-manager-and-config.md"
             },
             {
               "name": "1.6 模型与工具",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/06-models-and-tools.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/06-models-and-tools.md"
             },
             {
               "name": "1.7 创建项目",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/07-creating-project.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/07-creating-project.md"
             },
             {
               "name": "1.8 Localhost 与端口",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/01-environment-setup/08-localhost-and-ports.md"
+              "herf": "vibe-vibe/docs/Advanced/01-environment-setup/08-localhost-and-ports.md"
             }
           ]
         },
         {
           "name": "第二章：AI 使用说明书",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/index.md",
+          "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/index.md",
           "section": [
             {
               "name": "2.0 推荐配置",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/00-recommended-config.md"
+              "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/00-recommended-config.md"
             },
             {
               "name": "2.1 AI 编程的经济学",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/01-ai-economics.md"
+              "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/01-ai-economics.md"
             },
             {
               "name": "2.2 VibeCoding 工作流",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/02-vibecoding-workflow.md"
+              "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/02-vibecoding-workflow.md"
             },
             {
               "name": "2.3 MCP、插件与 Skills",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/03-mcp-and-skills.md"
+              "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/03-mcp-and-skills.md"
             },
             {
               "name": "2.4 项目规则配置",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/04-project-config.md"
+              "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/04-project-config.md"
             },
             {
               "name": "2.5 高效调试心法",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/02-ai-tuning-guide/05-debugging-tips.md"
+              "herf": "vibe-vibe/docs/Advanced/02-ai-tuning-guide/05-debugging-tips.md"
             }
           ]
         },
         {
           "name": "第三章：产品思维与文档驱动",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/03-prd-doc-driven/index.md",
+          "herf": "vibe-vibe/docs/Advanced/03-prd-doc-driven/index.md",
           "section": [
             {
               "name": "3.0 PRD 模板",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/03-prd-doc-driven/00-prd-template.md"
+              "herf": "vibe-vibe/docs/Advanced/03-prd-doc-driven/00-prd-template.md"
             },
             {
               "name": "3.1 想法验证实战",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/03-prd-doc-driven/01-product-validation.md"
+              "herf": "vibe-vibe/docs/Advanced/03-prd-doc-driven/01-product-validation.md"
             },
             {
               "name": "3.2 与 AI 确认需求",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/03-prd-doc-driven/02-discuss-with-ai.md"
+              "herf": "vibe-vibe/docs/Advanced/03-prd-doc-driven/02-discuss-with-ai.md"
             },
             {
               "name": "3.3 PRD 编写实战",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/03-prd-doc-driven/03-prd-template-guide.md"
+              "herf": "vibe-vibe/docs/Advanced/03-prd-doc-driven/03-prd-template-guide.md"
             },
             {
               "name": "3.4 从 PRD 到代码",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/03-prd-doc-driven/04-coding-agents.md"
+              "herf": "vibe-vibe/docs/Advanced/03-prd-doc-driven/04-coding-agents.md"
             }
           ]
         },
         {
           "name": "第四章：你必须知道的开发基础",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/index.md",
+          "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/index.md",
           "section": [
             {
               "name": "4.0 代码运行的三种状态",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/00-build-basics.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/00-build-basics.md"
             },
             {
               "name": "4.1 技术栈决策框架",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/01-tech-stack-decision.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/01-tech-stack-decision.md"
             },
             {
               "name": "4.2 从 PRD 到技术文档",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/02-prd-and-tech-docs.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/02-prd-and-tech-docs.md"
             },
             {
               "name": "4.3 如何读懂 AI 生成的代码",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/03-programming-basics.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/03-programming-basics.md"
             },
             {
               "name": "4.4 API 与 HTTP 基础",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/04-api-and-http.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/04-api-and-http.md"
             },
             {
               "name": "4.5 前后端分离概念",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/05-frontend-backend-separation.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/05-frontend-backend-separation.md"
             },
             {
               "name": "4.6 配置文件格式",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/06-config-formats.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/06-config-formats.md"
             },
             {
               "name": "4.7 API 集成实战",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/07-api-integration.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/07-api-integration.md"
             },
             {
               "name": "4.8 项目说明书结构",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/08-readme-structure.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/08-readme-structure.md"
             },
             {
               "name": "4.9 别再重复造轮子",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/04-dev-fundamentals/09-finding-libraries.md"
+              "herf": "vibe-vibe/docs/Advanced/04-dev-fundamentals/09-finding-libraries.md"
             }
           ]
         },
         {
           "name": "第五章：界面(UI)与交互(UX)",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/index.md",
+          "herf": "vibe-vibe/docs/Advanced/05-ui-ux/index.md",
           "section": [
             {
               "name": "5.1 AI 设计工具",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/01-ai-design-tools.md"
+              "herf": "vibe-vibe/docs/Advanced/05-ui-ux/01-ai-design-tools.md"
             },
             {
               "name": "5.2 组件库",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/02-component-libraries.md"
+              "herf": "vibe-vibe/docs/Advanced/05-ui-ux/02-component-libraries.md"
             },
             {
               "name": "5.3 动画与交互库",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/03-animation-libraries.md"
+              "herf": "vibe-vibe/docs/Advanced/05-ui-ux/03-animation-libraries.md"
             },
             {
               "name": "5.4 UI 风格与灵感",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/04-ui-inspiration.md"
+              "herf": "vibe-vibe/docs/Advanced/05-ui-ux/04-ui-inspiration.md"
             },
             {
               "name": "5.5 让页面更高级的效果",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/05-advanced-effects.md"
+              "herf": "vibe-vibe/docs/Advanced/05-ui-ux/05-advanced-effects.md"
             },
             {
               "name": "5.6 让 AI 记住你的设计规范",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/05-ui-ux/06-component-skills.md"
+              "herf": "vibe-vibe/docs/Advanced/05-ui-ux/06-component-skills.md"
             }
           ]
         },
         {
           "name": "第六章：数据持久化与数据库",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/06-data-persistence-database/index.md",
+          "herf": "vibe-vibe/docs/Advanced/06-data-persistence-database/index.md",
           "section": [
             {
               "name": "6.0 领取你的数据库",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/06-data-persistence-database/00-get-your-database.md"
+              "herf": "vibe-vibe/docs/Advanced/06-data-persistence-database/00-get-your-database.md"
             },
             {
               "name": "6.1 数据存储演进",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/06-data-persistence-database/01-storage-evolution.md"
+              "herf": "vibe-vibe/docs/Advanced/06-data-persistence-database/01-storage-evolution.md"
             },
             {
               "name": "6.2 数据库基础概念",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/06-data-persistence-database/02-database-basics.md"
+              "herf": "vibe-vibe/docs/Advanced/06-data-persistence-database/02-database-basics.md"
             },
             {
               "name": "6.3 如何操作数据库",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/06-data-persistence-database/03-database-operations.md"
+              "herf": "vibe-vibe/docs/Advanced/06-data-persistence-database/03-database-operations.md"
             },
             {
               "name": "6.4 数据库设计与优化",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/06-data-persistence-database/05-database-design.md"
+              "herf": "vibe-vibe/docs/Advanced/06-data-persistence-database/05-database-design.md"
             }
           ]
         },
         {
           "name": "第七章：后端API开发",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/07-backend-api/index.md",
+          "herf": "vibe-vibe/docs/Advanced/07-backend-api/index.md",
           "section": [
             {
               "name": "7.0 跑通你的第一个全栈应用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/07-backend-api/00-crud-example.md"
+              "herf": "vibe-vibe/docs/Advanced/07-backend-api/00-crud-example.md"
             },
             {
               "name": "7.1 一个接口不够用了",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/07-backend-api/01-api-growing-pains.md"
+              "herf": "vibe-vibe/docs/Advanced/07-backend-api/01-api-growing-pains.md"
             },
             {
               "name": "7.2 当接口出了问题",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/07-backend-api/02-when-things-go-wrong.md"
+              "herf": "vibe-vibe/docs/Advanced/07-backend-api/02-when-things-go-wrong.md"
             },
             {
               "name": "7.3 让接口更好用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/07-backend-api/03-api-as-product.md"
+              "herf": "vibe-vibe/docs/Advanced/07-backend-api/03-api-as-product.md"
             }
           ]
         },
         {
           "name": "第八章：安全与用户认证",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/index.md",
+          "herf": "vibe-vibe/docs/Advanced/08-auth-security/index.md",
           "section": [
             {
               "name": "8.0 用户系统快速示例",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/00-user-system-example.md"
+              "herf": "vibe-vibe/docs/Advanced/08-auth-security/00-user-system-example.md"
             },
             {
               "name": "8.1 密钥管理与环境变量",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/01-env-and-secrets.md"
+              "herf": "vibe-vibe/docs/Advanced/08-auth-security/01-env-and-secrets.md"
             },
             {
               "name": "8.2 认证方式与方案选择",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/02-auth-methods.md"
+              "herf": "vibe-vibe/docs/Advanced/08-auth-security/02-auth-methods.md"
             },
             {
               "name": "8.3 路由保护与权限控制",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/03-route-protection.md"
+              "herf": "vibe-vibe/docs/Advanced/08-auth-security/03-route-protection.md"
             },
             {
               "name": "8.4 安全检查与问题排查",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/04-security-checklist.md"
+              "herf": "vibe-vibe/docs/Advanced/08-auth-security/04-security-checklist.md"
             },
             {
               "name": "8.5 进阶安全防护",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/08-auth-security/05-advanced-security.md"
+              "herf": "vibe-vibe/docs/Advanced/08-auth-security/05-advanced-security.md"
             }
           ]
         },
         {
           "name": "第九章：功能测试与自动化",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/09-testing-automation/index.md",
+          "herf": "vibe-vibe/docs/Advanced/09-testing-automation/index.md",
           "section": [
             {
               "name": "9.1 为什么需要测试",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/09-testing-automation/01-testing-strategy.md"
+              "herf": "vibe-vibe/docs/Advanced/09-testing-automation/01-testing-strategy.md"
             },
             {
               "name": "9.2 API 测试与 E2E 测试",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/09-testing-automation/02-api-and-e2e-testing.md"
+              "herf": "vibe-vibe/docs/Advanced/09-testing-automation/02-api-and-e2e-testing.md"
             },
             {
               "name": "9.3 自动化工作流",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/09-testing-automation/03-automation-workflow.md"
+              "herf": "vibe-vibe/docs/Advanced/09-testing-automation/03-automation-workflow.md"
             }
           ]
         },
         {
           "name": "第十章：Localhost 与公网访问",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/10-localhost-public-access/index.md",
+          "herf": "vibe-vibe/docs/Advanced/10-localhost-public-access/index.md",
           "section": [
             {
               "name": "10.1 从 Localhost 到互联网",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/10-localhost-public-access/01-network-layers.md"
+              "herf": "vibe-vibe/docs/Advanced/10-localhost-public-access/01-network-layers.md"
             },
             {
               "name": "10.2 内网穿透：临时让朋友看看",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/10-localhost-public-access/02-tunneling.md"
+              "herf": "vibe-vibe/docs/Advanced/10-localhost-public-access/02-tunneling.md"
             }
           ]
         },
         {
           "name": "第十一章：Git 版本控制与协作开发",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/11-git-collaboration/index.md",
+          "herf": "vibe-vibe/docs/Advanced/11-git-collaboration/index.md",
           "section": [
             {
               "name": "11.1 为什么需要 Git",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/11-git-collaboration/01-why-git.md"
+              "herf": "vibe-vibe/docs/Advanced/11-git-collaboration/01-why-git.md"
             },
             {
               "name": "11.2 推上云端，开始协作",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/11-git-collaboration/02-remote-and-collaboration.md"
+              "herf": "vibe-vibe/docs/Advanced/11-git-collaboration/02-remote-and-collaboration.md"
             },
             {
               "name": "11.3 分支、PR 与团队工作流",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/11-git-collaboration/03-branch-and-workflow.md"
+              "herf": "vibe-vibe/docs/Advanced/11-git-collaboration/03-branch-and-workflow.md"
             }
           ]
         },
         {
           "name": "第十二章：无服务器部署与 CI/CD 自动化",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/index.md",
+          "herf": "vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/index.md",
           "section": [
             {
               "name": "12.1 部署到 EdgeOne Pages",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/01-deploy-edgeone.md"
+              "herf": "vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/01-deploy-edgeone.md"
             },
             {
               "name": "12.2 部署到类 Vercel 平台",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/02-deploy-vercel-platforms.md"
+              "herf": "vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/02-deploy-vercel-platforms.md"
             },
             {
               "name": "12.3 CI/CD 与自动化",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/03-cicd-automation.md"
+              "herf": "vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/03-cicd-automation.md"
             },
             {
               "name": "12.4 运维基础与成本优化",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/04-operations-cost.md"
+              "herf": "vibe-vibe/docs/Advanced/12-serverless-deploy-cicd/04-operations-cost.md"
             }
           ]
         },
         {
           "name": "第十三章：域名、DNS 与网络接入",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/13-domain-dns/index.md",
+          "herf": "vibe-vibe/docs/Advanced/13-domain-dns/index.md",
           "section": [
             {
               "name": "13.1 域名购买与 DNS 配置",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/13-domain-dns/01-domain-setup.md"
+              "herf": "vibe-vibe/docs/Advanced/13-domain-dns/01-domain-setup.md"
             },
             {
               "name": "13.2 备案与访问问题排查",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/13-domain-dns/02-compliance-access.md"
+              "herf": "vibe-vibe/docs/Advanced/13-domain-dns/02-compliance-access.md"
             }
           ]
         },
         {
           "name": "第十四章：云服务器运维与项目部署",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/index.md",
+          "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/index.md",
           "section": [
             {
               "name": "14.1 VPS 选购指南",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/01-vps-selection.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/01-vps-selection.md"
             },
             {
               "name": "14.2 VPS 初始化与安全配置",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/02-vps-setup.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/02-vps-setup.md"
             },
             {
               "name": "14.3.1 应用商店与 Docker 基础",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-1-docker-apps.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-1-docker-apps.md"
             },
             {
               "name": "14.3.2 部署 Next.js 应用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-2-deploy-nextjs.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-2-deploy-nextjs.md"
             },
             {
               "name": "14.3.3 部署静态网站",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-3-deploy-static.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-3-deploy-static.md"
             },
             {
               "name": "14.3.4 部署前后端分离应用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-4-deploy-fullstack.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/03-4-deploy-fullstack.md"
             },
             {
               "name": "14.4 配置域名与证书",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/04-domain-ssl.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/04-domain-ssl.md"
             },
             {
               "name": "14.5 其他好玩的应用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/14-vps-ops-deploy/05-cool-apps.md"
+              "herf": "vibe-vibe/docs/Advanced/14-vps-ops-deploy/05-cool-apps.md"
             }
           ]
         },
         {
           "name": "第十五章：SEO、分享与数据统计",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/15-seo-analytics/index.md",
+          "herf": "vibe-vibe/docs/Advanced/15-seo-analytics/index.md",
           "section": [
             {
               "name": "15.1 Open Graph 与社交分享",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/15-seo-analytics/01-opengraph-sharing.md"
+              "herf": "vibe-vibe/docs/Advanced/15-seo-analytics/01-opengraph-sharing.md"
             },
             {
               "name": "15.2 SEO 全攻略",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/15-seo-analytics/02-seo-guide.md"
+              "herf": "vibe-vibe/docs/Advanced/15-seo-analytics/02-seo-guide.md"
             },
             {
               "name": "15.3 Umami 数据统计",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/15-seo-analytics/03-umami.md"
+              "herf": "vibe-vibe/docs/Advanced/15-seo-analytics/03-umami.md"
             },
             {
               "name": "15.4 法律合规",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/15-seo-analytics/04-legal.md"
+              "herf": "vibe-vibe/docs/Advanced/15-seo-analytics/04-legal.md"
             }
           ]
         },
         {
           "name": "第十六章：用户反馈与产品迭代",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/16-user-feedback-iteration/index.md",
+          "herf": "vibe-vibe/docs/Advanced/16-user-feedback-iteration/index.md",
           "section": [
             {
               "name": "16.1 面对真实用户",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/16-user-feedback-iteration/01-facing-real-users.md"
+              "herf": "vibe-vibe/docs/Advanced/16-user-feedback-iteration/01-facing-real-users.md"
             },
             {
               "name": "16.2 反馈分类与优先级",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/16-user-feedback-iteration/02-feedback-prioritization.md"
+              "herf": "vibe-vibe/docs/Advanced/16-user-feedback-iteration/02-feedback-prioritization.md"
             },
             {
               "name": "16.3 理解用户",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/16-user-feedback-iteration/03-understanding-users.md"
+              "herf": "vibe-vibe/docs/Advanced/16-user-feedback-iteration/03-understanding-users.md"
             },
             {
               "name": "16.4 迭代与成长",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/16-user-feedback-iteration/04-iteration-and-growth.md"
+              "herf": "vibe-vibe/docs/Advanced/16-user-feedback-iteration/04-iteration-and-growth.md"
             }
           ]
         },
         {
           "name": "NEXT LEVEL",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Advanced/99-next-level/index.md"
+          "herf": "vibe-vibe/docs/Advanced/99-next-level/index.md"
         }
       ]
     },
     {
       "name": "实践案例篇",
-      "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Practice/index.md",
+      "herf": "vibe-vibe/docs/Practice/index.md",
       "chapter": [
         {
           "name": "开源 AI 画布：我的 Vibecoding 实践历程",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Practice/ai-canvas-vibecoding-journey.md"
+          "herf": "vibe-vibe/docs/Practice/ai-canvas-vibecoding-journey.md"
         },
         {
           "name": "🎨 Vibecoding 案例分享：零代码打造 AI 绘本生成器",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Practice/ai-picture-book-generator.md"
+          "herf": "vibe-vibe/docs/Practice/ai-picture-book-generator.md"
         },
         {
           "name": "全栈实战：AI 简历优化 SaaS (AI Resume Polish)",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Practice/ai-resume-saas.md"
+          "herf": "vibe-vibe/docs/Practice/ai-resume-saas.md"
         },
         {
           "name": "全栈开发：21天养成思考习惯的小游戏",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Practice/full-stack-21-day-thinking-habit-game.md"
+          "herf": "vibe-vibe/docs/Practice/full-stack-21-day-thinking-habit-game.md"
         },
         {
           "name": "我的一点点 Vibe 的编程经验分享——从执行者到决策者",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Practice/vibe-coding-methodology.md"
+          "herf": "vibe-vibe/docs/Practice/vibe-coding-methodology.md"
         }
       ]
     },
     {
       "name": "优质文章篇",
-      "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/index.md",
+      "herf": "vibe-vibe/docs/Articles/index.md",
       "chapter": [
         {
           "name": "核心概念与范式演进",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/index.md",
+          "herf": "vibe-vibe/docs/Articles/01-core-concepts/index.md",
           "section": [
             {
               "name": "260307 智能体工程",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/agentic-engineering.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/agentic-engineering.md"
             },
             {
               "name": "250615 Coding Agents 入门指南",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/coding-agents-101.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/coding-agents-101.md"
             },
             {
               "name": "250800 我们在 FAANG 是怎么做 Vibe Coding 的",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/how-we-vibe-code-at-faang.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/how-we-vibe-code-at-faang.md"
             },
             {
               "name": "250731 规范是新的源代码",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/specs-are-the-new-source-code.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/specs-are-the-new-source-code.md"
             },
             {
               "name": "260307 工厂模型：Coding Agents 如何改变软件工程",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/the-factory-model-how-coding-agents-changed-software-engineering.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/the-factory-model-how-coding-agents-changed-software-engineering.md"
             },
             {
               "name": "260307 Vibe Coding 不是低质量工作的借口",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/vibe-coding-is-not-an-excuse-for-low-quality-work.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/vibe-coding-is-not-an-excuse-for-low-quality-work.md"
             },
             {
               "name": "260307 Vibe Coding：革命还是鲁莽放纵？",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/vibe-coding-revolution-or-reckless-abandon.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/vibe-coding-revolution-or-reckless-abandon.md"
             },
             {
               "name": "260307 什么是 AI Agent？为什么它们很重要？",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/what-are-ai-agents-why-do-they-matter.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/what-are-ai-agents-why-do-they-matter.md"
             },
             {
               "name": "250201 关于 Vibe Coding 你需要知道的一切",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/what-you-need-to-know-about-vibe-coding.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/what-you-need-to-know-about-vibe-coding.md"
             },
             {
               "name": "260307 如何成为世界级的智能体工程师",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/01-core-concepts/world-class-agent-engineer.md"
+              "herf": "vibe-vibe/docs/Articles/01-core-concepts/world-class-agent-engineer.md"
             }
           ]
         },
         {
           "name": "基础技术与架构设计",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/index.md",
+          "herf": "vibe-vibe/docs/Articles/02-technical-architecture/index.md",
           "section": [
             {
               "name": "260307 用文件系统和 Bash 构建智能体",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/build-agents-with-filesystems-and-bash.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/build-agents-with-filesystems-and-bash.md"
             },
             {
               "name": "250800 揭秘 Claude Code 的工作原理",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/how-claude-code-works.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/how-claude-code-works.md"
             },
             {
               "name": "260307 MCP：它是什么，以及为什么重要",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/mcp-what-it-is-and-why-it-matters.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/mcp-what-it-is-and-why-it-matters.md"
             },
             {
               "name": "251112 多智能体系统如何支撑 AI 原生工程",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/multi-agent-systems-ai-native-engineering.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/multi-agent-systems-ai-native-engineering.md"
             },
             {
               "name": "250318 理解 AI 的「五层蛋糕」架构",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/nvidia-ai-5-layer-cake.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/nvidia-ai-5-layer-cake.md"
             },
             {
               "name": "260307 自我改进的编码智能体",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/self-improving-coding-agents.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/self-improving-coding-agents.md"
             },
             {
               "name": "260307 测试「Bash 就够了」假设：SQL vs Bash 智能体对比实验",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/02-technical-architecture/testing-bash-vs-sql.md"
+              "herf": "vibe-vibe/docs/Articles/02-technical-architecture/testing-bash-vs-sql.md"
             }
           ]
         },
         {
           "name": "工具链与开发框架",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/index.md",
+          "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/index.md",
           "section": [
             {
               "name": "260307 AGENTS.md vs Skills：被动上下文为何胜过主动检索",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/agents-md-vs-skills.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/agents-md-vs-skills.md"
             },
             {
               "name": "260307 AI 驱动的原型开发：v0、Bolt 和 Lovable 对比",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/ai-driven-prototyping-v0-bolt-and-lovable-compared.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/ai-driven-prototyping-v0-bolt-and-lovable-compared.md"
             },
             {
               "name": "260307 Claude Code Swarms：多智能体协作开发",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/claude-code-swarms.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/claude-code-swarms.md"
             },
             {
               "name": "Claude Skills 完整构建指南",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/complete-guide-to-building-skills-for-claude.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/complete-guide-to-building-skills-for-claude.md"
             },
             {
               "name": "260307 如何为 AI 智能体写出优秀的规范",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/how-to-write-good-spec-for-ai-agents.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/how-to-write-good-spec-for-ai-agents.md"
             },
             {
               "name": "260307 我们删掉了智能体 80% 的工具",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/we-removed-80-percent-tools.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/we-removed-80-percent-tools.md"
             },
             {
               "name": "260307 为什么我在 AI 工程中使用 Cline",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/03-toolchain-frameworks/why-i-use-cline-for-ai-engineering.md"
+              "herf": "vibe-vibe/docs/Articles/03-toolchain-frameworks/why-i-use-cline-for-ai-engineering.md"
             }
           ]
         },
         {
           "name": "工程实施与质量保障",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/index.md",
+          "herf": "vibe-vibe/docs/Articles/04-engineering-practices/index.md",
           "section": [
             {
               "name": "250800 AI 代码审查的实施与最佳实践",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/ai-code-review-implementation.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/ai-code-review-implementation.md"
             },
             {
               "name": "260307 AI 写代码更快，你的工作是证明它能用",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/ai-writes-code-faster-your-job-is-to-prove-it-works.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/ai-writes-code-faster-your-job-is-to-prove-it-works.md"
             },
             {
               "name": "260307 在AI时代避免技能退化",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/avoiding-skill-atrophy-in-the-age-of-ai.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/avoiding-skill-atrophy-in-the-age-of-ai.md"
             },
             {
               "name": "260307 超越70%：最大化AI辅助编程中人类30%的价值",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/beyond-the-70-maximizing-the-human-30-of-ai-assisted-coding.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/beyond-the-70-maximizing-the-human-30-of-ai-assisted-coding.md"
             },
             {
               "name": "260307 如何为 AI Coding Agents 编写高质量规范",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/how-to-write-a-good-spec-for-ai-agents.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/how-to-write-a-good-spec-for-ai-agents.md"
             },
             {
               "name": "260307 GenAI 时代领导高效工程团队",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/leading-effective-engineering-teams-in-the-age-of-genai.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/leading-effective-engineering-teams-in-the-age-of-genai.md"
             },
             {
               "name": "260307 我在2026年的LLM编码工作流",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/my-llm-coding-workflow-going-into-2026.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/my-llm-coding-workflow-going-into-2026.md"
             },
             {
               "name": "260114 React 最佳实践：Vercel 十年性能优化经验总结",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/react-best-practices.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/react-best-practices.md"
             },
             {
               "name": "260307 停止为 AGENTS.md 使用 /init",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/stop-using-init-for-agents.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/stop-using-init-for-agents.md"
             },
             {
               "name": "260307 Vercel 如何构建 Coding Agents 的 AEO 追踪系统",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/vercel-aeo-tracking.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/vercel-aeo-tracking.md"
             },
             {
               "name": "260307 使用 AI Gateway 生成视频",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/video-generation-with-ai-gateway.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/video-generation-with-ai-gateway.md"
             },
             {
               "name": "260307 你的 AI Coding Agents 需要一个管理者",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/04-engineering-practices/your-ai-coding-agents-need-a-manager.md"
+              "herf": "vibe-vibe/docs/Articles/04-engineering-practices/your-ai-coding-agents-need-a-manager.md"
             }
           ]
         },
         {
           "name": "安全、合规与局限性",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/05-security-compliance/index.md",
+          "herf": "vibe-vibe/docs/Articles/05-security-compliance/index.md",
           "section": [
             {
               "name": "250501 AI 代理已经到来，威胁也随之而来",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/05-security-compliance/ai-agents-threats-and-mitigations.md"
+              "herf": "vibe-vibe/docs/Articles/05-security-compliance/ai-agents-threats-and-mitigations.md"
             },
             {
               "name": "260307 智能体架构中的安全边界",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/05-security-compliance/security-boundaries-in-agentic-architectures.md"
+              "herf": "vibe-vibe/docs/Articles/05-security-compliance/security-boundaries-in-agentic-architectures.md"
             }
           ]
         },
         {
           "name": "商业应用与行业趋势",
-          "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/06-business-trends/index.md",
+          "herf": "vibe-vibe/docs/Articles/06-business-trends/index.md",
           "section": [
             {
               "name": "260307 OpenEvidence 如何打造让医生信得过的医疗 AI",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/06-business-trends/how-openevidence-built-healthcare-ai-physicians-trust.md"
+              "herf": "vibe-vibe/docs/Articles/06-business-trends/how-openevidence-built-healthcare-ai-physicians-trust.md"
             },
             {
               "name": "260307 用 AI 智能体扩展社区，同时保持人性化",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/06-business-trends/keeping-community-human-while-scaling-with-agents.md"
+              "herf": "vibe-vibe/docs/Articles/06-business-trends/keeping-community-human-while-scaling-with-agents.md"
             },
             {
               "name": "260307 软件工程的未来两年",
-              "herf": "c:/souce-code-ai/ai-ebook/vibe-vibe/docs/Articles/06-business-trends/the-next-two-years-of-software-engineering.md"
+              "herf": "vibe-vibe/docs/Articles/06-business-trends/the-next-two-years-of-software-engineering.md"
             }
           ]
         }
