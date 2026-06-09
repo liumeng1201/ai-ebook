@@ -6,10 +6,10 @@
         <item name="colorSurface">@color/surface_color</item>
         <item name="colorOnSurface">@color/on_surface_color</item>
         <item name="colorOnSurfaceVariant">@color/on_surface_variant_color</item>
-        <item name="android:statusBarColor">@color/toolbar_color_light</item>
+        <item name="android:statusBarColor">@color/toolbar_color</item>
         <item name="dividerColor">@color/divider_color</item>
         <!-- Toolbar 颜色 -->
-        <item name="toolbarColor">@color/toolbar_color_light</item>
-        <item name="onToolbarColor">@color/on_toolbar_color_light</item>
+        <item name="toolbarColor">@color/toolbar_color</item>
+        <item name="onToolbarColor">@color/on_toolbar_color</item>
     </style>
 </resources>
