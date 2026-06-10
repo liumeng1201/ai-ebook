@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="48dp"
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
@@ -20,14 +21,6 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2" />
-
-        <ImageView
-            android:id="@+id/toc_node_arrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:scaleType="centerInside"
-            android:contentDescription="展开/收起" />
 
     </LinearLayout>
 

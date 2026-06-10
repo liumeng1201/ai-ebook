@@ -11,4 +11,8 @@
     <!-- Toolbar 颜色：深色模式 -->
     <color name="toolbar_color">#1E1E1E</color>
     <color name="on_toolbar_color">#E0E0E0</color>
+
+    <!-- 目录页分组色块 -->
+    <color name="toc_part_bg">#1E2A35</color>
+    <color name="toc_chapter_bg">#1A1A1A</color>
 </resources>
