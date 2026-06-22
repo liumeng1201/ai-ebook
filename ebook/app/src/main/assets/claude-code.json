@@ -1,0 +1,255 @@
+{
+  "book": "Claude Code 指南",
+  "part": [
+    {
+      "name": "一、基础入门",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "01 · Claude Code 简介",
+          "herf": "claude-code/01-what-is-claude-code.md"
+        },
+        {
+          "name": "02 · 安装与使用",
+          "herf": "claude-code/02-install.md"
+        },
+        {
+          "name": "03 · Claude Code 如何工作",
+          "herf": "claude-code/03-how-it-works.md"
+        },
+        {
+          "name": "04 · API 配置：订阅登录还是 API key，怎么选、怎么切",
+          "herf": "claude-code/04-api-config.md"
+        },
+        {
+          "name": "05 · 接入第三方 / 国产模型",
+          "herf": "claude-code/05-third-party-models.md"
+        }
+      ]
+    },
+    {
+      "name": "二、上手与项目",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "06 · Coding Plan：订阅套餐与计费",
+          "herf": "claude-code/06-coding-plan.md"
+        },
+        {
+          "name": "07 · 第一次使用：跑通第一个例子",
+          "herf": "claude-code/07-first-run.md"
+        },
+        {
+          "name": "08 · VS Code 集成",
+          "herf": "claude-code/08-vscode.md"
+        },
+        {
+          "name": "09 · JetBrains 集成",
+          "herf": "claude-code/09-jetbrains.md"
+        },
+        {
+          "name": "10 · 桌面 app（Desktop）",
+          "herf": "claude-code/10-desktop.md"
+        },
+        {
+          "name": "11 · 网页版与云端：把 Claude Code 装进浏览器和手机",
+          "herf": "claude-code/11-web-and-cloud.md"
+        },
+        {
+          "name": "12 · 项目初始化：用 /init 一键生成 CLAUDE.md",
+          "herf": "claude-code/12-project-init.md"
+        },
+        {
+          "name": "13 · 项目结构：Claude Code 在你项目里都放了什么",
+          "herf": "claude-code/13-project-structure.md"
+        }
+      ]
+    },
+    {
+      "name": "三、核心交互与操作",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "14 · 交互界面与快捷键：把手放对地方",
+          "herf": "claude-code/14-interface-and-shortcuts.md"
+        },
+        {
+          "name": "15 · 怎么提问和给指令：把话说到 Claude 心坎里",
+          "herf": "claude-code/15-prompting.md"
+        },
+        {
+          "name": "16 · 四个最常用的活儿：探索代码库、修 bug、重构、写测试",
+          "herf": "claude-code/16-common-workflows.md"
+        },
+        {
+          "name": "17 · 图片与多模态：贴张截图，它就懂了",
+          "herf": "claude-code/17-images-multimodal.md"
+        },
+        {
+          "name": "18 · CLAUDE.md 使用指南：把项目规矩写进它的记忆",
+          "herf": "claude-code/18-claude-md-guide.md"
+        },
+        {
+          "name": "19 · 上下文管理：别让它「失忆」也别烧爆 token",
+          "herf": "claude-code/19-context-management.md"
+        },
+        {
+          "name": "20 · 权限配置：放多松、收多紧，你说了算",
+          "herf": "claude-code/20-permissions.md"
+        },
+        {
+          "name": "21 · 安全与风险边界：到底该不该信任 AI 碰你的代码",
+          "herf": "claude-code/21-security.md"
+        }
+      ]
+    },
+    {
+      "name": "四、高级功能扩展",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "22 · MCP：给 Claude 接上外部世界",
+          "herf": "claude-code/22-mcp.md"
+        },
+        {
+          "name": "23 · 子代理（Subagents）：把活儿外包出去，别什么都自己扛",
+          "herf": "claude-code/23-subagents.md"
+        },
+        {
+          "name": "24 · 插件（Plugins）：把一堆零碎配置一键打包",
+          "herf": "claude-code/24-plugins.md"
+        },
+        {
+          "name": "25 · 记忆系统（memory）：让它跨会话记住你",
+          "herf": "claude-code/25-memory.md"
+        },
+        {
+          "name": "26 · Agent Skills：给 Claude 装一身随叫随到的专项本事",
+          "herf": "claude-code/26-agent-skills.md"
+        },
+        {
+          "name": "27 · Skills 使用实例：装一个、喊一声、看它干活",
+          "herf": "claude-code/27-skills-in-practice.md"
+        },
+        {
+          "name": "28 · skill-creator 使用：用一个 skill 造你自己的 skill",
+          "herf": "claude-code/28-skill-creator.md"
+        },
+        {
+          "name": "29 · Agent teams 智能体团队：多会话协作",
+          "herf": "claude-code/29-agent-teams.md"
+        },
+        {
+          "name": "30 · 功能怎么选：CLAUDE.md vs Skill vs Hook vs MCP vs Subagent",
+          "herf": "claude-code/30-choosing-features.md"
+        }
+      ]
+    },
+    {
+      "name": "五、系统配置与优化",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "31 · settings.json：用户级 / 项目级配置",
+          "herf": "claude-code/31-settings-json.md"
+        },
+        {
+          "name": "32 · 输出样式（Output Styles）：换一档「节目」，不换主持人",
+          "herf": "claude-code/32-output-styles.md"
+        },
+        {
+          "name": "33 · 钩子（Hooks）：在固定时机自动扣扳机",
+          "herf": "claude-code/33-hooks.md"
+        },
+        {
+          "name": "34 · CLI 参考手册：命令与全部标志",
+          "herf": "claude-code/34-cli-reference.md"
+        },
+        {
+          "name": "35 · 控制与模式：开会话时手里那块「调音台」",
+          "herf": "claude-code/35-modes-and-control.md"
+        },
+        {
+          "name": "36 · 斜杠命令（Slash Commands）：一个 `/` 调出 Claude 的所有快捷动作",
+          "herf": "claude-code/36-slash-commands.md"
+        },
+        {
+          "name": "37 · 检查点（Checkpoints）：随时能倒带的安全网",
+          "herf": "claude-code/37-checkpoints.md"
+        }
+      ]
+    },
+    {
+      "name": "六、高级参考与实战",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "38 · 插件参考手册：把自己那套配置，打成一个能发出去的包",
+          "herf": "claude-code/38-plugins-reference.md"
+        },
+        {
+          "name": "39 · 实战入门：拿一个真需求，从开工到交付走一整趟",
+          "herf": "claude-code/39-getting-started-practice.md"
+        },
+        {
+          "name": "40 · Chrome：让它操作浏览器",
+          "herf": "claude-code/40-chrome.md"
+        },
+        {
+          "name": "41 · 并行任务：让几个 Claude 同时开工，而不是排队",
+          "herf": "claude-code/41-parallel-tasks.md"
+        },
+        {
+          "name": "42 · 环境变量：藏在背后那排「总开关」",
+          "herf": "claude-code/42-env-vars.md"
+        },
+        {
+          "name": "43 · Git 工作流：让 Claude 当你的 git 副手",
+          "herf": "claude-code/43-git-workflow.md"
+        },
+        {
+          "name": "44 · GitHub Actions：在 PR 里 @ 一下，让 Claude 自己干活",
+          "herf": "claude-code/44-github-actions.md"
+        },
+        {
+          "name": "45 · Agent SDK：把 Claude Code 的能力搬进你自己的程序",
+          "herf": "claude-code/45-agent-sdk.md"
+        },
+        {
+          "name": "46 · 开发配置：把 Claude 干活的「工作环境」调顺",
+          "herf": "claude-code/46-dev-config.md"
+        },
+        {
+          "name": "47 · Voice 语音模式：把提示词说出来，而不是打出来",
+          "herf": "claude-code/47-voice.md"
+        },
+        {
+          "name": "48 · 综合实战：从零到上线，把所学串成一条线",
+          "herf": "claude-code/48-capstone-project.md"
+        }
+      ]
+    },
+    {
+      "name": "七、收尾与查阅",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "49 · 最佳实践：把零散的好习惯，攒成一套能照着做的心法",
+          "herf": "claude-code/49-best-practices.md"
+        },
+        {
+          "name": "50 · 反模式：常见的错误用法",
+          "herf": "claude-code/50-anti-patterns.md"
+        },
+        {
+          "name": "51 · 常见问题排查（FAQ / Troubleshooting）",
+          "herf": "claude-code/51-troubleshooting.md"
+        },
+        {
+          "name": "52 · 术语表（小白友好）：把这一路的「黑话」一次性翻译成人话",
+          "herf": "claude-code/52-glossary.md"
+        }
+      ]
+    }
+  ]
+}

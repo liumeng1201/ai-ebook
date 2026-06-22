@@ -1,0 +1,203 @@
+{
+  "book": "Codex 指南",
+  "part": [
+    {
+      "name": "一、基础入门",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "01 · 认识 Codex 与四种入口",
+          "herf": "codex/01-what-is-codex.md"
+        },
+        {
+          "name": "02 · Codex 核心概念速览",
+          "herf": "codex/02-core-concepts.md"
+        },
+        {
+          "name": "03 · 安装与登录（Mac / Windows / Linux）",
+          "herf": "codex/03-install.md"
+        },
+        {
+          "name": "04 · 订阅与计费",
+          "herf": "codex/04-pricing.md"
+        },
+        {
+          "name": "05 · 接入 DeepSeek 等国产模型",
+          "herf": "codex/05-third-party-models.md"
+        }
+      ]
+    },
+    {
+      "name": "二、各入口怎么上手",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "06 · 跑通第一个任务",
+          "herf": "codex/06-first-task.md"
+        },
+        {
+          "name": "07 · 桌面 App 全景",
+          "herf": "codex/07-desktop-app.md"
+        },
+        {
+          "name": "08 · 命令行 CLI 上手",
+          "herf": "codex/08-cli.md"
+        },
+        {
+          "name": "09 · IDE 扩展（VS Code 等）",
+          "herf": "codex/09-ide.md"
+        },
+        {
+          "name": "10 · 云端 Codex Cloud：把活丢上云，喝着咖啡等结果",
+          "herf": "codex/10-cloud.md"
+        },
+        {
+          "name": "11 · 项目说明书 AGENTS.md：把规矩焊进 Codex 的开工流程",
+          "herf": "codex/11-agents-md.md"
+        }
+      ]
+    },
+    {
+      "name": "三、核心交互与操作",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "12 · 斜杠命令与快捷键：会话里的「快捷操作面板」",
+          "herf": "codex/12-slash-commands.md"
+        },
+        {
+          "name": "13 · 提示词（Prompt）写法：把话说到 Codex 心坎里",
+          "herf": "codex/13-prompting.md"
+        },
+        {
+          "name": "14 · 四类日常工作流：探索、修 bug、重构、写测试",
+          "herf": "codex/14-workflows.md"
+        },
+        {
+          "name": "15 · 权限、沙箱与审批：放多松、收多紧，自己拧",
+          "herf": "codex/15-permissions.md"
+        },
+        {
+          "name": "16 · 安全与风险边界：到底该不该放手让它碰你的代码",
+          "herf": "codex/16-security.md"
+        },
+        {
+          "name": "17 · 电脑操控与浏览器（Computer Use）：让 Codex 长出手",
+          "herf": "codex/17-computer-use.md"
+        }
+      ]
+    },
+    {
+      "name": "四、高级功能扩展",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "18 · config.toml 配置详解：一个文件管住所有旋钮",
+          "herf": "codex/18-config.md"
+        },
+        {
+          "name": "19 · 记忆系统（Memories 与 Chronicle）：让 Codex 跨会话记住你",
+          "herf": "codex/19-memory.md"
+        },
+        {
+          "name": "20 · 用 MCP 接外部工具：给 Codex 装上「外接口」",
+          "herf": "codex/20-mcp.md"
+        },
+        {
+          "name": "21 · 子代理（Subagents）：把活儿拆出去并行跑",
+          "herf": "codex/21-subagents.md"
+        },
+        {
+          "name": "22 · Agent Skills 技能：把一套活儿打包，教会 Codex 自己接",
+          "herf": "codex/22-skills.md"
+        },
+        {
+          "name": "23 · 插件（Plugins）：一键装一整套能力",
+          "herf": "codex/23-plugins.md"
+        },
+        {
+          "name": "24 · 规则与钩子（Rules & Hooks）：给 Codex 装上「卡点」和「扳机」",
+          "herf": "codex/24-hooks.md"
+        }
+      ]
+    },
+    {
+      "name": "五、工程化与自动化",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "25 · Worktrees 并行隔离：让几个 Codex 各干各的，互不打架",
+          "herf": "codex/25-worktrees.md"
+        },
+        {
+          "name": "26 · Git 与 GitHub 集成：让 Codex 在你的 PR 里当审查员",
+          "herf": "codex/26-git-github.md"
+        },
+        {
+          "name": "27 · 自动化与 CI/CD：让 Codex 在你不在的时候自己干活",
+          "herf": "codex/27-automation.md"
+        },
+        {
+          "name": "28 · 非交互模式 codex exec：把它塞进脚本和 CI 里跑",
+          "herf": "codex/28-noninteractive.md"
+        },
+        {
+          "name": "29 · Slack / Linear 与 SDK 集成：在别处召唤 Codex",
+          "herf": "codex/29-integrations.md"
+        }
+      ]
+    },
+    {
+      "name": "六、实战与进阶",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "30 · 怎么选模型：同一句话，到底该派哪个模型去跑",
+          "herf": "codex/30-models.md"
+        },
+        {
+          "name": "31 · 进阶技巧与提速：拖慢你的不是模型，是你给的烂上下文",
+          "herf": "codex/31-speed.md"
+        },
+        {
+          "name": "32 · 从 Claude Code 迁移：旧地图换个工具，照样能找到家",
+          "herf": "codex/32-migrate-from-claude-code.md"
+        },
+        {
+          "name": "33 · Windows 使用要点：原生还是 WSL，到底怎么跑才省心",
+          "herf": "codex/33-windows.md"
+        },
+        {
+          "name": "34 · 综合实战：从零给一个 TODO 小工具加功能、提交一次",
+          "herf": "codex/34-capstone.md"
+        }
+      ]
+    },
+    {
+      "name": "七、收尾与查阅",
+      "herf": null,
+      "chapter": [
+        {
+          "name": "35 · 命令与配置速查表",
+          "herf": "codex/35-cheatsheet.md"
+        },
+        {
+          "name": "36 · 最佳实践：那些「正确的废话」之外，真正能落地的几条",
+          "herf": "codex/36-best-practices.md"
+        },
+        {
+          "name": "37 · 常见问题排查：装不上、登不了、不肯改文件，挨个拆",
+          "herf": "codex/37-faq.md"
+        },
+        {
+          "name": "38 · 术语表",
+          "herf": "codex/38-glossary.md"
+        },
+        {
+          "name": "39 · 企业管理与治理：一个人玩和一家公司用，是两件事",
+          "herf": "codex/39-enterprise.md"
+        }
+      ]
+    }
+  ]
+}
