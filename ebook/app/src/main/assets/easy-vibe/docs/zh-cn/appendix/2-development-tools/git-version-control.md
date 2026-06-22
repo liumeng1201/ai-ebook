@@ -410,11 +410,11 @@ Git 会在冲突的地方插入特殊标记：
 function login() {
   const url = '/api/login'
 
-<<<<<<< HEAD
+ <<<<<<< HEAD
   const timeout = 3000   // 你的版本
-=======
+ =======
   const timeout = 5000   // 队友的版本
->>>>>>> feature/update-timeout
+ >>>>>>> feature/update-timeout
 
   return fetch(url, { timeout })
 }

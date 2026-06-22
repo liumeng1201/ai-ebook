@@ -7,3 +7,6 @@
 [submodule "vibe-vibe"]
 	path = vibe-vibe
 	url = https://github.com/datawhalechina/vibe-vibe.git
+[submodule "ai-coding-guide"]
+	path = ai-coding-guide
+	url = https://github.com/stormzhang/ai-coding-guide.git
