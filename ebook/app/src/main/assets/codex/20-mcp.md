@@ -71,7 +71,7 @@ MCP server 不止一种。理解它们的区别，你才知道抄来的配置该
 
 **HTTP server 是连云服务的路子，鉴权方式有两种。** 官方写明 Streamable HTTP server 支持两种认证：
 
-- **Bearer token（令牌）**：在配置里指定一个存 token 的环境变量名
+- **Bearer token**：在配置里指定一个存 token 的环境变量名
 - **OAuth（授权登录）**：对支持 OAuth 的 server，跑一句 `codex mcp login <server-name>` 走授权流程
 
 像 Figma 的远程 server、各家云端文档 server，都是给个 URL、配好鉴权就连上，**本地不用装任何东西**。

@@ -460,10 +460,6 @@
               "herf": "easy-vibe/docs/zh-cn/appendix/3-browser-and-frontend/frontend-frameworks.md"
             },
             {
-              "name": "浏览器是一个操作系统",
-              "herf": "easy-vibe/docs/zh-cn/appendix/3-browser-and-frontend/browser-as-os.md"
-            },
-            {
               "name": "浏览器渲染管道",
               "herf": "easy-vibe/docs/zh-cn/appendix/3-browser-and-frontend/browser-as-os-rendering.md"
             },
