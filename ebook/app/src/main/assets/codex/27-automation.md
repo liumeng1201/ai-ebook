@@ -187,7 +187,7 @@ jobs:
 | `output-file` | 把最终消息存到磁盘 | 方便后续步骤上传或 diff |
 | `codex-args` | 塞额外的 CLI 参数 | JSON 数组（如 `["--ephemeral"]`）或 shell 字符串（如 `--profile ci`） |
 | `codex-version` | 钉死某个 CLI 版本 | 留空用最新发布版 |
-| `codex-home` | 指向共享的 Codex home 目录 | 想跨步骤复用配置 / MCP 时用 |
+| `codex-home` | 指向共享的 Codex 主目录 | 想跨步骤复用配置 / MCP 时用 |
 
 几个值得单独点一句的：
 

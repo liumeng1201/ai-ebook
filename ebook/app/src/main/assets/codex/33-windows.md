@@ -118,7 +118,7 @@ curl -fsSL https://chatgpt.com/codex/install.sh | sh
 codex
 ```
 
-这里有个我 2026 年 4 月踩过的坑：我图方便把仓库放在了 `/mnt/c/Users/...` 下（也就是 Windows 的 C 盘，从 WSL 里挂载访问），结果 Codex 跑起来卡得要命，一个 `git status` 都要等好几秒。后来才知道，**WSL 访问 Windows 挂载盘（`/mnt/c/...`）的文件 I/O 特别慢**，得把仓库挪到 Linux 原生的家目录下：
+这里有个我 2026 年 4 月踩过的坑：我图方便把仓库放在了 `/mnt/c/Users/...` 下（也就是 Windows 的 C 盘，从 WSL 里挂载访问），结果 Codex 跑起来卡得要命，一个 `git status` 都要等好几秒。后来才知道，**WSL 访问 Windows 挂载盘（`/mnt/c/...`）的文件 I/O 特别慢**，得把仓库挪到 Linux 原生的主目录下：
 
 ```bash
 mkdir -p ~/code && cd ~/code

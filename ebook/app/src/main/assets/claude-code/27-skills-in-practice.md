@@ -230,12 +230,12 @@ claude
 |---|---|---|
 | 放在哪 | `~/.claude/skills/<名>/SKILL.md` | 项目里的 `.claude/skills/<名>/SKILL.md` |
 | 谁能用 | 你所有项目，但**只有你这台机器** | clone 了这个仓库的**所有人** |
-| 进不进 Git | 不进（在你 home 目录） | **进**，跟代码一起提交 |
+| 进不进 Git | 不进（在你主目录） | **进**，跟代码一起提交 |
 | 典型用途 | 你的个人习惯流程 | 团队统一规范（部署、提交格式、出图风格） |
 
 具体怎么落地，就三步：
 
-**第一步：把 skill 放进项目的 `.claude/skills/`**（而不是 home 目录）：
+**第一步：把 skill 放进项目的 `.claude/skills/`**（而不是主目录）：
 
 ```text
 你的项目/
@@ -270,7 +270,7 @@ git commit -m "feat: 加一个团队统一的 commit skill"
 
 我们做一个超简单的：让 Claude **用「咖啡馆聊天风」帮你解释一段代码**。
 
-**第一步：建 skill 目录**（个人级，放 home 目录，你所有项目都能用）。Mac / Linux：
+**第一步：建 skill 目录**（个人级，放主目录，你所有项目都能用）。Mac / Linux：
 
 ```bash
 mkdir -p ~/.claude/skills/explain-casual

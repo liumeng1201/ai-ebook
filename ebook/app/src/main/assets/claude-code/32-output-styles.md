@@ -100,7 +100,7 @@
 
 ### 路子一：`/config` 菜单里点（推荐，直观）
 
-在 Claude 会话里敲 `/config`，在弹出的菜单里找到**输出样式（Output Styles）**那一项，选你要的样式。官方原话：
+在 Claude 会话里敲 `/config`，在弹出的菜单里找到**输出样式**（Output Styles）那一项，选你要的样式。官方原话：
 
 > 运行 `/config` 并选择**输出样式**从菜单中选择一种样式。你的选择会保存到[本地项目级别](/zh-CN/settings)的 `.claude/settings.local.json`。
 

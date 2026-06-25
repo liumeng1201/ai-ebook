@@ -205,7 +205,7 @@ curl -fsSL https://chatgpt.com/codex/install.sh | sh
 codex
 ```
 
-> 一个 WSL 性能坑：**别把代码仓库放在 `/mnt/c/...` 这种 Windows 挂载路径下**，I/O 会明显慢，还容易出 symlink、权限问题。放在 Linux 家目录（如 `~/code/my-app` ）下最快。需要从 Windows 访问这些文件时，去资源管理器输 `\\wsl$` 进去找。
+> 一个 WSL 性能坑：**别把代码仓库放在 `/mnt/c/...` 这种 Windows 挂载路径下**，I/O 会明显慢，还容易出 symlink、权限问题。放在 Linux 主目录（如 `~/code/my-app` ）下最快。需要从 Windows 访问这些文件时，去资源管理器输 `\\wsl$` 进去找。
 
 下面这张图帮你三步决策走哪条路：
 

@@ -139,7 +139,7 @@ export API_TIMEOUT_MS="1200000"
 
 翻成大白话，四句话记住：
 
-- **`~/.claude/settings.json`**——在你**家目录**下，「我自己，所有项目都这么来」。你个人偏好放这儿。
+- **`~/.claude/settings.json`**——在你**主目录**下，「我自己，所有项目都这么来」。你个人偏好放这儿。
 - **`.claude/settings.json`**（项目根）——「这个项目里**所有人**都这么来」，而且**它进 git**，队友拉下来就带上。团队统一的规矩放这儿。
 - **`.claude/settings.local.json`**（项目根）——「**只有我**，只在这个项目」，而且**它不进 git**（`.local` 后缀默认被忽略）。带私人凭据、只属于你的临时设置放这儿。
 - **托管设置**——管理员给全组织统一下发的，你一般改不了，也轮不到你设。
@@ -148,11 +148,11 @@ export API_TIMEOUT_MS="1200000"
 
 | 这个变量的性质 | 该写进哪个文件 |
 |---------------|--------------|
-| 我个人偏好，所有项目通用 | `~/.claude/settings.json`（家目录） |
+| 我个人偏好，所有项目通用 | `~/.claude/settings.json`（主目录） |
 | 全队统一，要随项目共享 | `.claude/settings.json`（进 git） |
 | 我私人的、带凭据的、只这个项目 | `.claude/settings.local.json`（❌ 不进 git） |
 
-> 💡 一句话总结：`settings.json` 分四类文件，**写进哪个决定这变量管「谁」**——家目录管自己全局、项目根 `settings.json` 进 git 管全队、`.local` 不进 git 只管自己；**带个人凭据的变量，死活别往进 git 的文件里放。**
+> 💡 一句话总结：`settings.json` 分四类文件，**写进哪个决定这变量管「谁」**——主目录管自己全局、项目根 `settings.json` 进 git 管全队、`.local` 不进 git 只管自己；**带个人凭据的变量，死活别往进 git 的文件里放。**
 
 ---
 
@@ -325,7 +325,7 @@ claude
 }
 ```
 
-> 写进 `.claude/settings.local.json`（当前项目根、不进 git），或 `~/.claude/settings.json`（你的家目录、所有项目通用），按你想要的范围选——参考第 03 节那张表。
+> 写进 `.claude/settings.local.json`（当前项目根、不进 git），或 `~/.claude/settings.json`（你的主目录、所有项目通用），按你想要的范围选——参考第 03 节那张表。
 
 存盘后，**新开终端、直接 `claude`（不 export），再问一遍**——这次该稳定读到 `300000` 了，**而且无论你以后怎么启动 `claude`，它都在**。这就是「方式三：写进 `settings.json`」相比 shell 临时设的好处：**一次写好，不用回回 export。**
 
@@ -345,7 +345,7 @@ claude
 |------------|------|--------|
 | 环境变量管啥 | 连接、认证、超时、隐私这些底层行为 | 启动时读的键值对开关，「设一次长期生效」 |
 | 在哪设 | shell 临时 / `~/.zshrc` / `settings.json` 的 `env` | 按生效范围选，长期用推荐 `settings.json` |
-| 写进哪个 settings 文件 | 家目录 / 项目根（进 git） / `.local`（不进 git） | **带凭据的别进 git** |
+| 写进哪个 settings 文件 | 主目录 / 项目根（进 git） / `.local`（不进 git） | **带凭据的别进 git** |
 | 最常用哪几个 | `ANTHROPIC_*`、`API_TIMEOUT_MS`、`DISABLE_TELEMETRY`、`CLAUDE_CONFIG_DIR` | 各有默认值，改完**重启才生效** |
 | 多处都设了听谁的 | 环境变量 > 设置字段；但 `/model` 压过 `ANTHROPIC_MODEL` | 越当场越明确，优先级越高 |
 
