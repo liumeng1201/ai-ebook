@@ -6,18 +6,28 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.Set;
 
+import io.noties.markwon.image.ImageItem;
 import io.noties.markwon.image.SchemeHandler;
 
 /**
- * 自定义文件方案处理器。
- * 处理 file:// 路径时，优先从本地下载内容读取图片，fallback 到 bundled assets。
+ * 自定义 URI scheme 处理器，使用 "localfile" scheme。
+ *
+ * 处理 localfile:// 路径时，从本地文件系统读取图片。
+ * file:///android_asset/ 路径仍由 FileSchemeHandler 处理。
+ *
+ * 用法：
+ *   ImagesPlugin.create()
+ *     .addSchemeHandler(FileSchemeHandler.createWithAssets(ctx))
+ *     .addSchemeHandler(new LocalFileSchemeHandler(ctx))
+ *
+ * 在 resolveImagePaths() 中：
+ *   - 图片在本地内容中 → 输出 localfile:///path/to/image
+ *   - 图片仅在 assets   → 输出 file:///android_asset/path
  */
 public class LocalFileSchemeHandler extends SchemeHandler {
 
@@ -30,39 +40,21 @@ public class LocalFileSchemeHandler extends SchemeHandler {
     @NonNull
     @Override
     public Set<String> supportedSchemes() {
-        return Collections.singleton("file");
+        return Collections.singleton("localfile");
     }
 
+    @Nullable
     @Override
-    public void handle(@NonNull Raw raw, @NonNull SchemeHandlerResult result) {
-        Uri uri = raw.uri();
-        String uriString = uri.toString();
+    public ImageItem handle(@NonNull String raw, @NonNull Uri uri) {
+        final String path = uri.getPath();
+        if (path == null || path.isEmpty()) {
+            return null;
+        }
 
-        // 只处理 file:///android_asset/ 开头的路径
-        if (uriString.startsWith("file:///android_asset/")) {
-            String assetPath = uriString.substring("file:///android_asset/".length());
-
-            // 1. 先尝试从本地下载内容读取
-            File contentDir = UpdateManager.getContentDir(context);
-            if (contentDir != null) {
-                File localFile = new File(contentDir, assetPath);
-                if (localFile.exists()) {
-                    try {
-                        result.setInputStream(new FileInputStream(localFile));
-                        return;
-                    } catch (IOException e) {
-                        // fall through to assets
-                    }
-                }
-            }
-
-            // 2. Fallback 到 bundled assets
-            try {
-                InputStream is = context.getAssets().open(assetPath);
-                result.setInputStream(is);
-            } catch (IOException e) {
-                // 文件不存在，返回空
-            }
+        try {
+            return ImageItem.withDecodingNeeded(null, new FileInputStream(path));
+        } catch (IOException e) {
+            return null;
         }
     }
 }

@@ -19,6 +19,7 @@ import com.ebook.reader.util.ProgressStore;
 import com.ebook.reader.util.UpdateManager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 import io.noties.markwon.Markwon;
 import io.noties.markwon.ext.tables.TablePlugin;
 import io.noties.markwon.image.ImagesPlugin;
+import io.noties.markwon.image.file.FileSchemeHandler;
 
 public class ReaderActivity extends AppCompatActivity {
 
@@ -64,12 +66,14 @@ public class ReaderActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.reader_progress);
 
         // 初始化 Markwon
-        //   - ImagesPlugin: 图片加载，配置 LocalFileSchemeHandler 支持本地和 assets 路径
+        //   - ImagesPlugin: 双 handler — assets 文件 + 本地存储文件
         //   - TablePlugin: 表格渲染
         markwon = Markwon.builder(this)
                 .usePlugin(ImagesPlugin.create(new ImagesPlugin.ImagesConfigure() {
                     @Override
                     public void configureImages(ImagesPlugin plugin) {
+                        plugin.addSchemeHandler(
+                                FileSchemeHandler.createWithAssets(ReaderActivity.this));
                         plugin.addSchemeHandler(
                                 new LocalFileSchemeHandler(ReaderActivity.this));
                     }
@@ -196,12 +200,15 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
     /**
-     * 将 markdown 中的相对图片路径替换为 file:///android_asset/ 路径
-     * 匹配 ![](relative-path) 但不匹配 http:// / https:// / /(绝对路径) / data: / file:
+     * 将 markdown 中的相对图片路径转换为实际可访问的 URI。
+     *
+     * 优先级：
+     *   1. 图片在本地下载内容中 → localfile:///absolute/path
+     *   2. 图片在 bundled assets → file:///android_asset/path
      */
     private String resolveImagePaths(String markdown, String assetDir) {
         Pattern pattern = Pattern.compile(
-                "!\\[([^\\]]*)\\]\\(((?!https?://|/|data:|file:)[^)]+)\\)"
+                "!\\[([^\\]]*)\\]\\(((?!https?://|/|data:|file:|localfile:)[^)]+)\\)"
         );
         Matcher matcher = pattern.matcher(markdown);
         StringBuffer sb = new StringBuffer();
@@ -209,8 +216,25 @@ public class ReaderActivity extends AppCompatActivity {
             String alt = matcher.group(1);
             String path = matcher.group(2);
             String resolved = resolveRelativePath(assetDir, path);
+
+            // 检查本地下载内容中是否有此图片
+            File contentDir = UpdateManager.getContentDir(ReaderActivity.this);
+            if (contentDir != null) {
+                File localFile = new File(contentDir, resolved);
+                if (localFile.exists()) {
+                    // 本地存储路径
+                    String absPath = localFile.getAbsolutePath().replace('\\', '/');
+                    matcher.appendReplacement(sb,
+                            Matcher.quoteReplacement(
+                                    "![" + alt + "](localfile://" + absPath + ")"));
+                    continue;
+                }
+            }
+
+            // Fallback 到 bundled assets
             matcher.appendReplacement(sb,
-                    Matcher.quoteReplacement("![" + alt + "](file:///android_asset/" + resolved + ")"));
+                    Matcher.quoteReplacement(
+                            "![" + alt + "](file:///android_asset/" + resolved + ")"));
         }
         matcher.appendTail(sb);
         return sb.toString();
