@@ -21,9 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class BookListActivity extends AppCompatActivity {
 
@@ -69,7 +67,6 @@ public class BookListActivity extends AppCompatActivity {
         jsonFiles.clear();
         bookNameCache.clear();
         jsonSources.clear();
-        Set<String> seen = new HashSet<>();
 
         // 1. 从 bundled assets 扫描
         AssetManager am = getAssets();
@@ -82,7 +79,6 @@ public class BookListActivity extends AppCompatActivity {
                             && !file.equals("version.json")) {
                         String bookName = BookJsonParser.parseBookName(am, file);
                         if (bookName != null && !bookName.isEmpty()) {
-                            seen.add(file);
                             jsonFiles.add(file);
                             bookNameCache.add(bookName);
                             jsonSources.add("assets");

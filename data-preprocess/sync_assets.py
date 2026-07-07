@@ -14,10 +14,8 @@ sync_assets.py — 统一内容同步脚本
 
 import json
 import os
-import platform
 import shutil
 import subprocess
-import sys
 from datetime import datetime, timezone
 
 

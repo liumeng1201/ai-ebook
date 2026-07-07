@@ -7,10 +7,10 @@ on:
       - 'data-preprocess/easy-vibe.json'
       - 'data-preprocess/vibe-vibe.json'
       - 'data-preprocess/sync_assets.py'
-      - 'ai-coding-guide/**'
-      - 'easy-vibe/**'
-      - 'vibe-vibe/**'
-      - 'CodexGuide/**'
+      - 'ai-coding-guide'
+      - 'easy-vibe'
+      - 'vibe-vibe'
+      - 'CodexGuide'
       - '.github/workflows/content-release.yml'
   workflow_dispatch:
 

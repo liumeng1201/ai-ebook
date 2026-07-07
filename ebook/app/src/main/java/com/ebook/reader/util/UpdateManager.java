@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -40,24 +41,18 @@ import java.util.zip.ZipInputStream;
 public class UpdateManager {
 
     private static final String TAG = "UpdateManager";
-
-    // 用 GITHUB_TOKEN 提高 API 速率限制（如果有的话）
     private static final String GITHUB_API = "https://api.github.com/repos/liumeng1201/ai-ebook/releases";
-    private static final String RAW_BASE = "https://raw.githubusercontent.com/liumeng1201/ai-ebook/master";
-
     private static final String PREFS_NAME = "update_prefs";
     private static final String KEY_LAST_CHECK = "last_check_time";
     private static final String KEY_CURRENT_VERSION = "current_content_version";
-    private static final String THROTTLE_MS = 30 * 60 * 1000L; // 30 分钟
+    private static final String THROTTLE_MS = 30 * 60 * 1000L;
 
     private static final String STAGING_DIR = "content-staging";
     private static final String CURRENT_DIR = "content-current";
     private static final String VERSION_FILE = "version.json";
 
-    // 更新类型
     public enum UpdateType { APP, CONTENT, BOTH }
 
-    // 回调接口
     public interface UpdateCallback {
         void onChecking();
         void onUpdateAvailable(UpdateType type, String version, String releaseNotes);
@@ -69,9 +64,6 @@ public class UpdateManager {
     // 1. 版本信息读取
     // ============================================================
 
-    /**
-     * 从 bundled assets 读取本地版本信息
-     */
     public static VersionInfo getLocalVersion(Context context) {
         try {
             InputStream is = context.getAssets().open(VERSION_FILE);
@@ -89,23 +81,22 @@ public class UpdateManager {
 
     /**
      * 静默检查内容更新（后台，不弹窗，受限流控制）
-     * 在 MyApp.onCreate() 中调用
      */
     public static void checkContentUpdate(Context context) {
         if (shouldThrottle(context)) {
-            Log.d(TAG, "距上次检查不足 30 分钟，跳过静默检查");
+            Log.d(TAG, "距上次检查不足 30 分钟，跳过");
             return;
         }
+        saveLastCheckTime(context);
 
         new Thread(() -> {
             try {
-                VersionInfo local = getLocalVersion(context);
-                if (local == null) return;
+                List<GitHubRelease> releases = fetchReleases();
+                if (releases == null || releases.isEmpty()) return;
 
-                // 获取最新 content release
-                int latestContent = getLatestContentVersion();
+                int latestContent = getLatestContentVersionFromReleases(releases);
                 if (latestContent > getStoredContentVersion(context)) {
-                    String downloadUrl = getContentDownloadUrl(latestContent);
+                    String downloadUrl = getContentDownloadUrlFromReleases(releases, latestContent);
                     if (downloadUrl != null) {
                         downloadContentBundle(context, downloadUrl, latestContent);
                         setStoredContentVersion(context, latestContent);
@@ -131,7 +122,6 @@ public class UpdateManager {
                     return;
                 }
 
-                // 获取 GitHub Releases
                 List<GitHubRelease> releases = fetchReleases();
                 if (releases == null || releases.isEmpty()) {
                     callback.onError("无法连接到 GitHub");
@@ -144,21 +134,22 @@ public class UpdateManager {
                 String contentVersion = "";
                 String releaseNotes = "";
 
+                // --- 检查 App 更新 ---
                 for (GitHubRelease release : releases) {
                     if (release.tagName != null && release.tagName.startsWith("v1.0.")) {
-                        // App Release
                         try {
                             int remoteCode = Integer.parseInt(release.tagName.substring(4));
                             if (remoteCode > local.appVersionCode) {
                                 hasAppUpdate = true;
                                 appVersion = release.tagName;
                                 releaseNotes = release.body != null ? release.body : "";
-                                break; // 最新 app 版本
+                                break;
                             }
                         } catch (NumberFormatException ignored) {}
                     }
                 }
 
+                // --- 检查内容更新 ---
                 int latestContentVersion = getLatestContentVersionFromReleases(releases);
                 int storedContent = getStoredContentVersion(context);
                 if (latestContentVersion > storedContent) {
@@ -166,11 +157,11 @@ public class UpdateManager {
                     contentVersion = "content-" + latestContentVersion;
                 }
 
-                // 手动检查的结果用以显示，不影响限流
                 recordManualCheckTime(context);
 
                 if (hasAppUpdate && hasContentUpdate) {
-                    callback.onUpdateAvailable(UpdateType.BOTH, appVersion + " + " + contentVersion, releaseNotes);
+                    callback.onUpdateAvailable(UpdateType.BOTH,
+                            appVersion + " + " + contentVersion, releaseNotes);
                 } else if (hasAppUpdate) {
                     callback.onUpdateAvailable(UpdateType.APP, appVersion, releaseNotes);
                 } else if (hasContentUpdate) {
@@ -189,46 +180,33 @@ public class UpdateManager {
     // 3. 内容下载与安装
     // ============================================================
 
-    /**
-     * 下载内容包并安装
-     */
     public static void downloadContentBundle(Context context, String url, int version) {
         try {
             Log.d(TAG, "下载内容包: " + url);
 
-            // 下载到 cache 目录
             File cacheDir = new File(context.getCacheDir(), "downloads");
             cacheDir.mkdirs();
             File zipFile = new File(cacheDir, "content-bundle-" + version + ".zip");
 
             downloadFile(url, zipFile);
 
-            // 解压到 staging 目录
             File stagingDir = new File(context.getFilesDir(), STAGING_DIR);
-            if (stagingDir.exists()) {
-                deleteDir(stagingDir);
-            }
+            if (stagingDir.exists()) deleteDir(stagingDir);
             stagingDir.mkdirs();
 
             unzip(zipFile, stagingDir);
 
-            // 原子切换：重命名 staging → current
             File currentDir = new File(context.getFilesDir(), CURRENT_DIR);
             File currentDirBackup = new File(context.getFilesDir(), CURRENT_DIR + "-backup");
 
             if (currentDir.exists()) {
-                // 先重命名旧的为备份（瞬间完成，同一分区）
                 if (currentDirBackup.exists()) deleteDir(currentDirBackup);
                 currentDir.renameTo(currentDirBackup);
             }
 
-            // staging → current 原子重命名
             stagingDir.renameTo(currentDir);
 
-            // 删除备份
             if (currentDirBackup.exists()) deleteDir(currentDirBackup);
-
-            // 清理下载的 zip
             zipFile.delete();
 
             Log.d(TAG, "内容更新安装完成");
@@ -237,9 +215,6 @@ public class UpdateManager {
         }
     }
 
-    /**
-     * 下载 APK 并触发安装
-     */
     public static void downloadAndInstallApk(Context context, String downloadUrl) {
         try {
             Log.d(TAG, "下载 APK: " + downloadUrl);
@@ -250,12 +225,10 @@ public class UpdateManager {
 
             downloadFile(downloadUrl, apkFile);
 
-            // 触发安装
-            android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+            android.content.Intent intent = new android.content.Intent(
+                    android.content.Intent.ACTION_VIEW);
             android.net.Uri uri = androidx.core.content.FileProvider.getUriForFile(
-                    context,
-                    context.getPackageName() + ".fileprovider",
-                    apkFile);
+                    context, context.getPackageName() + ".fileprovider", apkFile);
             intent.setDataAndType(uri, "application/vnd.android.package-archive");
             intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK
                     | android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -266,13 +239,20 @@ public class UpdateManager {
         }
     }
 
+    /**
+     * 手动触发内容更新（已知版本号和下载 URL）
+     */
+    public static void installContentUpdate(Context context, int version, String downloadUrl) {
+        new Thread(() -> {
+            downloadContentBundle(context, downloadUrl, version);
+            setStoredContentVersion(context, version);
+        }).start();
+    }
+
     // ============================================================
     // 4. 内容文件读取
     // ============================================================
 
-    /**
-     * 打开内容文件：优先读取本地下载内容，fallback 到 bundled assets
-     */
     public static InputStream openContent(Context context, String assetPath) throws IOException {
         File localFile = new File(new File(context.getFilesDir(), CURRENT_DIR), assetPath);
         if (localFile.exists()) {
@@ -281,14 +261,9 @@ public class UpdateManager {
         return context.getAssets().open(assetPath);
     }
 
-    /**
-     * 获取内容根目录（用于图片加载）
-     */
     public static File getContentDir(Context context) {
         File current = new File(context.getFilesDir(), CURRENT_DIR);
-        if (current.exists()) {
-            return current;
-        }
+        if (current.exists()) return current;
         return null;
     }
 
@@ -297,31 +272,21 @@ public class UpdateManager {
     // ============================================================
 
     private static boolean shouldThrottle(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        long lastCheck = prefs.getLong(KEY_LAST_CHECK, 0);
+        long lastCheck = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                .getLong(KEY_LAST_CHECK, 0);
         return (System.currentTimeMillis() - lastCheck) < THROTTLE_MS;
     }
 
     private static void saveLastCheckTime(Context context) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putLong(KEY_LAST_CHECK, System.currentTimeMillis())
-                .apply();
+                .edit().putLong(KEY_LAST_CHECK, System.currentTimeMillis()).apply();
     }
 
-    /**
-     * 保存手动检查时间（仅用于显示，不影响限流阈值）
-     */
     private static void recordManualCheckTime(Context context) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putLong("manual_check_time", System.currentTimeMillis())
-                .apply();
+                .edit().putLong("manual_check_time", System.currentTimeMillis()).apply();
     }
 
-    /**
-     * 获取手动检查时间（毫秒）
-     */
     public static long getManualCheckTime(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .getLong("manual_check_time", 0);
@@ -334,44 +299,7 @@ public class UpdateManager {
 
     private static void setStoredContentVersion(Context context, int version) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putInt(KEY_CURRENT_VERSION, version)
-                .apply();
-    }
-
-    /**
-     * 获取最新的 content release 编号
-     */
-    private static int getLatestContentVersion() {
-        try {
-            String json = httpGet(GITHUB_API + "/latest");
-            JsonObject release = JsonParser.parseString(json).getAsJsonObject();
-            String tag = release.get("tag_name").getAsString();
-            if (tag.startsWith("content-")) {
-                return Integer.parseInt(tag.substring(8));
-            }
-        } catch (Exception e) {
-            Log.w(TAG, "获取最新内容版本失败", e);
-        }
-        return 0;
-    }
-
-    /**
-     * 获取 content release 的下载链接
-     */
-    private static String getContentDownloadUrl(int version) {
-        try {
-            String json = httpGet(GITHUB_API + "/tags/content-" + version);
-            JsonObject release = JsonParser.parseString(json).getAsJsonObject();
-            JsonArray assets = release.getAsJsonArray("assets");
-            if (assets != null && assets.size() > 0) {
-                return assets.get(0).getAsJsonObject()
-                        .get("browser_download_url").getAsString();
-            }
-        } catch (Exception e) {
-            Log.w(TAG, "获取下载链接失败", e);
-        }
-        return null;
+                .edit().putInt(KEY_CURRENT_VERSION, version).apply();
     }
 
     /**
@@ -393,7 +321,8 @@ public class UpdateManager {
     /**
      * 获取 content release 的下载链接
      */
-    private static String getContentDownloadUrlFromReleases(List<GitHubRelease> releases, int version) {
+    private static String getContentDownloadUrlFromReleases(
+            List<GitHubRelease> releases, int version) {
         String targetTag = "content-" + version;
         for (GitHubRelease r : releases) {
             if (targetTag.equals(r.tagName)) {
@@ -405,29 +334,12 @@ public class UpdateManager {
         return null;
     }
 
-    /**
-     * 获取 App Release 的 APK 下载链接
-     */
-    private static String getAppDownloadUrl(List<GitHubRelease> releases, String tagName) {
-        for (GitHubRelease r : releases) {
-            if (tagName.equals(r.tagName)) {
-                if (r.assets != null) {
-                    for (GitHubAsset asset : r.assets) {
-                        if (asset.name != null && asset.name.endsWith(".apk")) {
-                            return asset.browserDownloadUrl;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
+    // ============================================================
+    // 6. HTTP / 文件工具
+    // ============================================================
 
-    /**
-     * 调用 GitHub Releases API，带认证（如果 GITHUB_TOKEN 环境变量存在）
-     */
     private static List<GitHubRelease> fetchReleases() throws IOException {
-        String json = httpGet(GITHUB_API + "?per_page=5");
+        String json = httpGet(GITHUB_API + "?per_page=10");
         Type listType = new TypeToken<List<GitHubRelease>>(){}.getType();
         return new Gson().fromJson(json, listType);
     }
@@ -439,13 +351,11 @@ public class UpdateManager {
         conn.setConnectTimeout(10000);
         conn.setReadTimeout(10000);
 
-        // 如果环境变量有 GITHUB_TOKEN，自动附加认证以提高限流
-        String token = System.getenv("GITHUB_TOKEN");
-        if (token != null && !token.isEmpty()) {
-            conn.setRequestProperty("Authorization", "token " + token);
-        }
-
         int code = conn.getResponseCode();
+        if (code == 403) {
+            // 被限流了
+            throw new IOException("GitHub API 限流，请稍后再试");
+        }
         if (code != 200) {
             throw new IOException("GitHub API 返回 " + code);
         }
@@ -489,9 +399,11 @@ public class UpdateManager {
             while ((entry = zis.getNextEntry()) != null) {
                 File target = new File(destDir, entry.getName());
 
-                // 防止 Zip Slip 安全漏洞
-                String canonicalPath = target.getCanonicalPath();
-                if (!canonicalPath.startsWith(destDir.getCanonicalPath() + File.separator)) {
+                // 防止 Zip Slip
+                String canonicalTarget = target.getCanonicalPath();
+                String canonicalDir = destDir.getCanonicalPath();
+                if (!canonicalTarget.startsWith(canonicalDir + File.separator)
+                        && !canonicalTarget.equals(canonicalDir)) {
                     throw new IOException("非法 ZIP 条目: " + entry.getName());
                 }
 
@@ -516,11 +428,8 @@ public class UpdateManager {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File f : files) {
-                if (f.isDirectory()) {
-                    deleteDir(f);
-                } else {
-                    f.delete();
-                }
+                if (f.isDirectory()) deleteDir(f);
+                else f.delete();
             }
         }
         dir.delete();
