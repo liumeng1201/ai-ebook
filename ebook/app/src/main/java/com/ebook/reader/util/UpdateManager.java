@@ -45,7 +45,7 @@ public class UpdateManager {
     private static final String PREFS_NAME = "update_prefs";
     private static final String KEY_LAST_CHECK = "last_check_time";
     private static final String KEY_CURRENT_VERSION = "current_content_version";
-    private static final String THROTTLE_MS = 30 * 60 * 1000L;
+    private static final long THROTTLE_MS = 30 * 60 * 1000L;
 
     private static final String STAGING_DIR = "content-staging";
     private static final String CURRENT_DIR = "content-current";
@@ -379,11 +379,11 @@ public class UpdateManager {
         conn.setConnectTimeout(15000);
         conn.setReadTimeout(15000);
 
+        long total = 0;
         try (InputStream is = conn.getInputStream();
              OutputStream os = new FileOutputStream(dest)) {
             byte[] buffer = new byte[8192];
             int len;
-            long total = 0;
             while ((len = is.read(buffer)) != -1) {
                 os.write(buffer, 0, len);
                 total += len;
