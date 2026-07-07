@@ -8,6 +8,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -33,12 +35,29 @@ public class BookJsonParser {
     }
 
     /**
+     * 从本地文件目录中读取 JSON 并解析 book 字段
+     */
+    public static String parseBookName(AssetManager am, String jsonFileName, File contentDir) {
+        // 优先从 contentDir 读取
+        try {
+            File localFile = new File(contentDir, jsonFileName);
+            if (localFile.exists()) {
+                InputStream is = new FileInputStream(localFile);
+                JsonObject root = JsonParser.parseReader(new InputStreamReader(is)).getAsJsonObject();
+                JsonElement book = root.get("book");
+                return book != null ? book.getAsString() : null;
+            }
+        } catch (Exception ignored) {}
+        // fallback 到 assets
+        return parseBookName(am, jsonFileName);
+    }
+
+    /**
      * 解析目录树结构
      */
-    public static List<TocNode> parseTocTree(AssetManager am, String jsonFileName) {
+    public static List<TocNode> parseTocTree(InputStream is) {
         List<TocNode> partNodes = new ArrayList<>();
         try {
-            InputStream is = am.open(jsonFileName);
             JsonObject root = JsonParser.parseReader(new InputStreamReader(is)).getAsJsonObject();
 
             // 解析 part 数组
@@ -82,6 +101,19 @@ public class BookJsonParser {
             e.printStackTrace();
         }
         return partNodes;
+    }
+
+    /**
+     * 从 assets 中读取 JSON 并解析目录树（向后兼容）
+     */
+    public static List<TocNode> parseTocTree(AssetManager am, String jsonFileName) {
+        try {
+            InputStream is = am.open(jsonFileName);
+            return parseTocTree(is);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     /**

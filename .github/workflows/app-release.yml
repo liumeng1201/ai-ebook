@@ -1,0 +1,74 @@
+name: App Release
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'ebook/app/src/**'
+      - 'ebook/app/build.gradle'
+      - 'ebook/build.gradle'
+      - 'ebook/settings.gradle'
+      - 'ebook/gradle/**'
+      - '.github/workflows/app-release.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Sync content assets
+        run: python data-preprocess/sync_assets.py
+
+      - name: Get version info
+        id: version
+        run: |
+          VERSION_CODE=$(git rev-list --count HEAD)
+          echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
+          echo "version_name=1.0.$VERSION_CODE" >> $GITHUB_OUTPUT
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ebook/gradlew
+
+      - name: Build APK
+        run: |
+          cd ebook
+          ./gradlew assembleRelease \
+            -PversionCode=${{ steps.version.outputs.version_code }} \
+            -PversionName=${{ steps.version.outputs.version_name }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version_name }}
+          name: "📱 Ebook v${{ steps.version.outputs.version_name }}"
+          body: |
+            ## 此版本包含
+
+            - 最新内容更新
+            - App 代码变更
+
+            ## 安装说明
+
+            1. 下载 APK
+            2. 允许安装未知来源应用（设置 → 安全）
+            3. 打开安装即可
+
+            ## 内容版本
+            ${{ github.event.head_commit.message || '手动触发构建' }}
+          files: ebook/app/build/outputs/apk/release/app-release.apk

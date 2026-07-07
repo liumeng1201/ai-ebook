@@ -13,8 +13,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.ebook.reader.model.ReadingRecord;
 import com.ebook.reader.model.TocNode;
 import com.ebook.reader.util.BookJsonParser;
+import com.ebook.reader.util.LocalFileSchemeHandler;
 import com.ebook.reader.util.MarkdownCleaner;
 import com.ebook.reader.util.ProgressStore;
+import com.ebook.reader.util.UpdateManager;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -26,7 +28,6 @@ import java.util.regex.Pattern;
 import io.noties.markwon.Markwon;
 import io.noties.markwon.ext.tables.TablePlugin;
 import io.noties.markwon.image.ImagesPlugin;
-import io.noties.markwon.image.file.FileSchemeHandler;
 
 public class ReaderActivity extends AppCompatActivity {
 
@@ -63,21 +64,26 @@ public class ReaderActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.reader_progress);
 
         // 初始化 Markwon
-        //   - ImagesPlugin: 图片加载，配置 FileSchemeHandler 支持 android_asset 路径
+        //   - ImagesPlugin: 图片加载，配置 LocalFileSchemeHandler 支持本地和 assets 路径
         //   - TablePlugin: 表格渲染
         markwon = Markwon.builder(this)
                 .usePlugin(ImagesPlugin.create(new ImagesPlugin.ImagesConfigure() {
                     @Override
                     public void configureImages(ImagesPlugin plugin) {
                         plugin.addSchemeHandler(
-                                FileSchemeHandler.createWithAssets(ReaderActivity.this));
+                                new LocalFileSchemeHandler(ReaderActivity.this));
                     }
                 }))
                 .usePlugin(TablePlugin.create(this))
                 .build();
 
-        // 解析目录
-        tocTree = BookJsonParser.parseTocTree(getAssets(), jsonFile);
+        // 解析目录（优先读取本地下载内容，fallback 到 bundled assets）
+        try {
+            InputStream tocIs = UpdateManager.openContent(this, jsonFile);
+            tocTree = BookJsonParser.parseTocTree(tocIs);
+        } catch (Exception e) {
+            tocTree = BookJsonParser.parseTocTree(getAssets(), jsonFile);
+        }
 
         // 确定初始章节
         ReadingRecord record = ProgressStore.getReadingRecord(this, bookName);
@@ -159,7 +165,7 @@ public class ReaderActivity extends AppCompatActivity {
 
     private String readAssetContent(String assetPath) {
         try {
-            InputStream is = getAssets().open(assetPath);
+            InputStream is = UpdateManager.openContent(this, assetPath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             StringBuilder sb = new StringBuilder();
             String line;

@@ -1,0 +1,36 @@
+{
+  "app_version_code": 15,
+  "app_version_name": "1.0.15",
+  "app_commit_sha": "e991401",
+  "books": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code 指南",
+      "json_file": "claude-code.json",
+      "source_repo": "ai-coding-guide",
+      "content_sha": "d6cefce"
+    },
+    {
+      "id": "codex",
+      "name": "Codex 指南",
+      "json_file": "codex.json",
+      "source_repo": "ai-coding-guide",
+      "content_sha": "d6cefce"
+    },
+    {
+      "id": "easy-vibe",
+      "name": "小白代码",
+      "json_file": "easy-vibe.json",
+      "source_repo": "easy-vibe",
+      "content_sha": "0123354"
+    },
+    {
+      "id": "vibe-vibe",
+      "name": "Vibe 编码",
+      "json_file": "vibe-vibe.json",
+      "source_repo": "vibe-vibe",
+      "content_sha": "f2e121d"
+    }
+  ],
+  "generated_at": "2026-07-07T13:19:27Z"
+}
