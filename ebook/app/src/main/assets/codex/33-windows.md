@@ -8,6 +8,8 @@
 
 **说句实话，Codex 在 Windows 上现在真能原生跑，体验也不差，但它跟 Mac/Linux 不是一回事。** 沙箱机制是 Windows 专属的两套，路径是反斜杠，换行符是历史包袱，这些坑你不提前知道，迟早会踩。
 
+**先划清范围：本篇讲的是 Windows 下的 Codex CLI，也就是终端里的用法。** 如果你只用 Codex 桌面 App 或 IDE 扩展，装好就能用，基本没这些事——下面的 PowerShell、WSL、沙箱模式、路径换行排查，全是 CLI 场景的门道。
+
 这一篇就把 Windows 上的门道讲清楚：**怎么装、原生还是 WSL 怎么选、Windows 特有的三个坑怎么躲、沙箱跟 Mac/Linux 差在哪，最后亲手在 PowerShell 里跑通一个最小例子。**
 
 **看完这一篇，你会拿到：**
@@ -16,7 +18,7 @@
 - 用官方 PowerShell 脚本把 Codex 装上的完整步骤，外加几个 Windows 必备前置依赖
 - 「原生 PowerShell vs WSL2」的取舍清单：你是哪种人、该选哪条路
 - Windows 特有的三个坑——路径反斜杠、`CRLF` 换行、`Everyone` 权限警告——怎么提前躲掉
-- Windows 沙箱的 `elevated` / `unelevated` 两种模式跟 Mac/Linux 的差异，以及报错 `1385` 怎么办
+- Windows 沙箱的 `elevated` / `unelevated` 两种模式跟 Mac/Linux 的差异，以及报错 `1385` / `1223` 怎么办
 - 一套能照做的动手流程，在 Windows 上从零跑通第一个 Codex 任务
 
 > ⚠️ 命令、配置项、默认行为一律以 Codex [官方文档](https://developers.openai.com/codex/windows) 为准；模型名、套餐范围、版本号会随更新变动，以你本地 `codex --help` 和实际界面为准。本篇所有命令我都标了在 PowerShell 还是 WSL shell 里跑，别跑错地方。
@@ -210,11 +212,22 @@ sandbox = "elevated" # 或 "unelevated"
 3. 急着干活就先切 `unelevated` 顶着。
 4. 把 `CODEX_HOME/.sandbox/sandbox.log` 连同 Windows 版本一起发给团队排查。
 
+**同一条链路上还有个兄弟报错：`1223`**（这条官方文档暂未收录，来自读者在 Win11 + npm 安装环境下的实测反馈与修复验证）。症状长这样：`elevated` 模式下一让它改文件就报 `ShellExecuteExW failed to launch setup helper: 1223`，往往还伴随几条 `libpng warning: tRNS: invalid with alpha channel`，以及一个「`codex-windows-sandbox-setup.exe` → 找不到指定的模块」的弹窗。
+
+它跟 `1385` 是同一根因家族的不同阶段：**`1385` 是沙箱用户在「登录阶段」被组策略拒，`1223` 是 setup helper 在「启动阶段」就没起来**——出现上面那组「libpng 警告 + 找不到模块弹窗」的组合时，大概率不是 UAC 也不是杀软，而是 npm 装的 sandbox-setup 二进制或它的资源文件损坏了，重装覆盖即可（在 PowerShell 里）：
+
+```powershell
+npm.cmd uninstall -g @openai/codex
+npm.cmd install   -g @openai/codex
+```
+
+装完切回 `elevated` 再试。所以碰到「`elevated` 模式不工作」，别东一榔头西一棒子，按这条链走：**先看报错码——`1385` 找 IT 放登录权限，`1223` 用 npm 重装覆盖——都解不了，再切 `unelevated` 顶着干活。**
+
 > 🔒 有一个文件夹千万别外发：`CODEX_HOME/.sandbox-secrets/` 里是密钥，排障发日志时只发 `sandbox.log`，别把这个目录带上。
 
 如果某条命令因为「沙箱读不了某个目录」失败了，回到第 04 节那条 `/sandbox-add-read-dir` 把目录加进去就行。
 
-> 💡 一句话总结：Windows 沙箱是独立的两套，默认 `elevated`、装不上退 `unelevated`，碰到 `1385` 多半是公司策略卡了登录权限，找 IT。
+> 💡 一句话总结：Windows 沙箱是独立的两套，默认 `elevated`、装不上退 `unelevated`；`elevated` 报错先看码——`1385` 是公司策略卡登录权限找 IT，`1223` 多半是 npm 装的 setup helper 损坏、重装覆盖就好。
 
 ---
 
@@ -286,7 +299,7 @@ git diff
 - **默认跑法**：原生 Windows + `elevated` 沙箱，官方首选，最快且安全不打折；WSL2 留给「本来就活在 Linux 里」的人。
 - **安装**：一条官方 PowerShell 脚本搞定 CLI，前置盯紧 Windows 版本、`winget` 可用、管理员权限，用 IDE 扩展再备 C++ 构建工具。
 - **三个特有坑**：路径写绝对、换行用 `.gitattributes` 锁成 `LF`、`Everyone` 权限警告别忽视。
-- **沙箱差异**：Windows 是独立的 `elevated` / `unelevated` 两套，跟 Mac 的 `sandbox-exec`、Linux 的 `bubblewrap` 都不一样；碰到 `1385` 多半是公司策略卡登录权限。
+- **沙箱差异**：Windows 是独立的 `elevated` / `unelevated` 两套，跟 Mac 的 `sandbox-exec`、Linux 的 `bubblewrap` 都不一样；碰到 `1385` 多半是公司策略卡登录权限，碰到 `1223` 多半是 npm 装的 setup helper 损坏、重装覆盖就好。
 
 你现在应该能：在一台干净的 Windows 机器上把 Codex 装好、判断自己该走原生还是 WSL、提前躲掉路径和换行的坑，并跑通第一个改文件的任务还顺手验了换行。
 

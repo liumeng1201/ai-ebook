@@ -137,7 +137,7 @@ default → acceptEdits → plan → bypassPermissions → auto → （回到 de
 
 推荐的实操习惯，跟[第 20 篇](20-permissions.md)说的一致——**绝大多数时候只在默认三档里 `Shift+Tab` 手动切**：接陌生项目先切 `plan` 让它通读出方案，信得过方向了切 `acceptEdits` 放它改，改完想严一点再切回 `default`。`bypassPermissions` 只在隔离容器里用启动参数开，别挂进日常循环——这道红线[第 20 篇](20-permissions.md)画过，不重复了。
 
-> 💡 一句话总结：`Shift+Tab` 默认只在 **`default` / `acceptEdits` / `plan`** 三档转；`auto` / `bypassPermissions` 要满足条件或带启动参数才入列，顺序是**「`plan` 之后，`bypassPermissions` 在前、`auto` 垫底」**——记住这个排位，按几下心里就有数。
+> 💡 一句话总结：`Shift+Tab` 默认只在 **`default` / `acceptEdits` / `plan`** 三档转；`auto` / `bypassPermissions` 要满足条件或带启动参数才入列，顺序是 **「`plan` 之后，`bypassPermissions` 在前、`auto` 垫底」**——记住这个排位，按几下心里就有数。
 
 ---
 

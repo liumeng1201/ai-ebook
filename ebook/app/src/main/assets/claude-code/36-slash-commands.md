@@ -291,7 +291,7 @@ disable-model-invocation: true
 
 还有一类带「双下划线」的命令你可能撞见：**MCP server 暴露的提示**。官方说它们用 `/mcp__<server>__<prompt>` 这种格式，从连上的 server 动态发现。看到一个 `/mcp__github__xxx` 别懵——那是某个 MCP server 自带的命令（详见第 22 篇）。
 
-> 💡 一句话总结：自己的命令同名时**「Skill 赢过 command」**；插件命令靠 **`插件名:命令名` 命名空间**，天生不撞；MCP server 的命令是 `/mcp__<server>__<prompt>` 格式——三种来源，认前缀就不会乱。
+> 💡 一句话总结：自己的命令同名时 **「Skill 赢过 command」**；插件命令靠 **`插件名:命令名` 命名空间**，天生不撞；MCP server 的命令是 `/mcp__<server>__<prompt>` 格式——三种来源，认前缀就不会乱。
 
 ---
 

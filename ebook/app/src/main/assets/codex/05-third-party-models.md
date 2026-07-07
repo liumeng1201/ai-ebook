@@ -150,7 +150,7 @@ Codex 把所有配置放在一个文件里：`~/.codex/config.toml` （这是 Co
 
 这节给路线一的**配置骨架**。我把它写成「骨架」而不是「照抄就跑」，是因为前面反复强调的协议风险——**这套配置语法是官方的、确定的；但它对 DeepSeek 通不通，得你实测**。
 
-平台差异先说清：`~/.codex/config.toml` 这个路径，**Mac / Linux 在 `~/.codex/` ，Windows 在 `C:\Users\你的用户名\.codex\` ** （`~` 即用户主目录）。文件不存在就新建一个。
+平台差异先说清：`~/.codex/config.toml` 这个路径，**Mac / Linux 在 `~/.codex/` ，Windows 在 `C:\Users\你的用户名\.codex\`**（`~` 即用户主目录）。文件不存在就新建一个。
 
 ### 第一步：拿一把 DeepSeek API Key
 

@@ -106,7 +106,7 @@ Workspace directories:
 |---|---|---|
 | `untrusted` | 只自动跑「已知安全」的只读操作，其余跑之前先问 | 防一切陌生命令，最谨慎 |
 | `on-request` | 默认在沙箱圈里自己干，**要出圈时才停下来问** | 最常用的平衡档 |
-| `never` | 不弹审批，闷头干 | 全自动，配合完全访问才有意义 |
+| `never` | 不弹审批，闷头干 | 自动化常用；权限仍由沙箱决定，配合完全访问才有意义 |
 
 这里有个官方细节值得拎出来——**`untrusted` 不是「只读」的意思**。它仍然会**自动执行那些已知安全的读操作**，只是凡是「可能改状态、或触发外部执行」的命令（比如有破坏性的 Git 操作、带 config 覆盖参数的命令）都要你点头。所以 `untrusted` 的体感是「读它随便读，一旦要动真格就拦」，比 `on-request` 更碎、更谨慎。
 
@@ -144,11 +144,13 @@ codex -s read-only -a on-request "只帮我审一下这段代码，别动手"
 
 弹出选择器，挑你要的档（`Read Only` / `Auto` / `Full Access` 这类），即时生效。我自己的真实节奏是：**接手陌生项目先 `/permissions` 切只读**让它通读出方案，看完心里有底了再切 `workspace-write` 放手——这个习惯救过我好几次，避免它一上来就瞎改我还没看懂的代码。
 
+> ⚠️ **新版菜单可能不同**：codex-cli **0.142** 起，官方推出 [permission profiles](https://developers.openai.com/codex/permissions)（**Beta，may change**）替代旧预设，你的 `/permissions` 可能变成 `Ask for approval` / `Approval for me` / `Full access` 这类**审批策略**档，不再直接出现 `Read Only`。要切只读时**改走启动参数 `codex --sandbox read-only`**，或在 `~/.codex/config.toml` 写 `sandbox_mode = "read-only"`（官方保留旧 sandbox 模式作兼容路径）。本节后续讲 `/permissions` 切只读的地方同此说明，不再重复。
+
 下面这张图把「先看沙箱、再看审批」的两道关卡理清楚：
 
-![沙箱与审批的两层决策三种终态：圈内直接做 / 出圈看策略 / on-request 还要问你](assets/02-approval-flow@2x.png)
+![沙箱与审批的两层决策：圈内直接做 / 出圈再看审批三档（untrusted 最严 · on-request 默认 · never 最松）](assets/02-approval-flow@2x.png)
 
-这张图在说：**每要做一步，Codex 先问「在不在沙箱圈内」（沙箱说了算），出圈了再问「要不要停下来问你」（审批说了算）**——两道关卡顺着走，缺一不可。
+这张图在说：**每要做一步，Codex 先问「在不在沙箱圈内」（沙箱说了算），出圈了再看审批三档——`untrusted` 最严、`on-request` 默认、`never` 最松——决定要不要停下来问你（审批说了算）**。两道关卡顺着走，缺一不可。注意图左下那行小字：`untrusted` 是个例外，它连**圈内的非只读操作**也会先问你，所以审批并不只在「出圈」时才发生。
 
 ### 写死：config.toml 当默认（每次启动都生效）
 
@@ -197,7 +199,7 @@ codex --profile full_auto
 
 **Codex 真正用来「精确控单条命令」的机制叫 rules（规则）**，注意它的决策词是 `allow` / `prompt` / `forbidden`，不是某些教程里写的 `ask` / `approve` / `deny`——写法不同，别混。
 
-它解决的问题是：沙箱是「按圈划」的粗边界，但有时你想要的是「`gh pr view` 这条命令哪怕出圈也直接放行、不用每次问」「`grep` 一律禁掉、逼自己用 `rg`」这种**按命令前缀**的精确控制。这时候扩大整个沙箱太粗暴，写一条 rule 才对症。
+它解决的问题是：沙箱是「按圈划」的粗边界，但有时你想要的是「`gh pr view` 这条命令哪怕出圈也直接放行，不用每次问」「`grep` 一律禁掉，逼自己用 `rg`」这种**按命令前缀**的精确控制。这时候扩大整个沙箱太粗暴，写一条 rule 才对症。
 
 规则写在 `~/.codex/rules/` 下的 `.rules` 文件里，语法像 Python（实际是 Starlark）。一条规则长这样：
 

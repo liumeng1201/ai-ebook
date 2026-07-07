@@ -74,7 +74,7 @@ claude
 
 这些都是 Claude Code 通过 `/login` / `/logout` 自动管的，**你不用手动碰**。我自己在 Mac 上排查登录问题时，照着 Linux 的路子去翻 `~/.claude/.credentials.json`，结果死活找不到，一度怀疑没登录成功——原因就在这：macOS 根本没把它放成文件，而是塞进了 Keychain。
 
-> 💡 一句话总结：订阅用户**「跑 `claude` → 浏览器登录」就齐活**，凭证 Claude Code 自动存好，别手动去翻。
+> 💡 一句话总结：订阅用户 **「跑 `claude` → 浏览器登录」就齐活**，凭证 Claude Code 自动存好，别手动去翻。
 
 ---
 
@@ -141,7 +141,7 @@ Windows（PowerShell，永久写入用户环境变量）：
 unset ANTHROPIC_API_KEY
 ```
 
-然后跑 `/status` 确认。如果是交互模式里临时不想用某个 key，也可以走 `/config` 里的**「使用自定义 API 密钥」开关**关掉它。
+然后跑 `/status` 确认。如果是交互模式里临时不想用某个 key，也可以走 `/config` 里的 **「使用自定义 API 密钥」开关** 关掉它。
 
 反过来，**从订阅切到 API key**，就是 `export` 上 key、批准一次即可（见 03 节）。
 

@@ -256,6 +256,14 @@ MCP 是个 USB 接口的概念在〔[20 MCP](20-mcp.md) 〕讲过，这里只管
 
 **解法**：原生 Windows 上想要最接近 Linux 的体验，官方建议用 WSL（Windows Subsystem for Linux）。**Windows 的安装、路径、WSL 配置这些专属坑，集中在〔[33 Windows 使用要点](33-windows.md) 〕讲**，遇到带 Windows 味儿的问题直接去那篇查，别在这儿瞎试。
 
+### elevated 沙箱报 `1385` / `1223`
+
+**症状**：`elevated` 沙箱模式装不上，或一让它改文件就报错。报错码 `1385`；或者报 `ShellExecuteExW failed to launch setup helper: 1223`，常伴随几条 `libpng warning` 和「`codex-windows-sandbox-setup.exe` → 找不到指定的模块」弹窗。
+
+**原因**：都是 `elevated` 沙箱初始化链路的问题，但阶段不同。`1385` 是沙箱用户登录被公司组策略拒（官方文档有记载）；`1223` 是 setup helper 启动就失败——这条官方暂未收录，读者实测反馈多为 npm 装的 helper 二进制损坏。
+
+**解法**：`1385` 找 IT 放行登录权限；`1223` 别去折腾 UAC 和杀软，看到「libpng 警告 + 找不到模块弹窗」这个组合，直接 `npm uninstall -g @openai/codex` 再 `npm install -g @openai/codex` 重装覆盖；都解不了先切 `unelevated` 顶着，完整排查链在〔[33 Windows 使用要点](33-windows.md) 〕第 05 节。
+
 ### 它改错了怎么撤
 
 **症状**：Codex 一通改，结果改坏了 / 改偏了，你想退回去。

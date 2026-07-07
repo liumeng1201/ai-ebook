@@ -85,6 +85,15 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 
 **怎么分辨？** 看提示符开头有没有 `PS`：有就是 PowerShell，没有就是 CMD。在 PowerShell 里跑 CMD 那条带 `&&` 的命令会报 `The token '&&' is not a valid statement separator`，反过来在 CMD 里跑 `irm` 会报 `'irm' is not recognized`——看到这俩报错换对应命令即可。
 
+**开着魔法上网，在 CMD 里装还是卡住 / 超时？** 这是个真坑：多数代理客户端默认的「系统代理」模式，CMD 里的 `curl` 根本不认——它不读 Windows 的系统代理设置，照样直连，所以代理开了等于没开。装之前先在**同一个 CMD 窗口**里手动设代理（`7890` 换成你代理客户端实际的 HTTP 端口，在客户端设置里能看到）：
+
+```batch
+set http_proxy=http://127.0.0.1:7890
+set https_proxy=http://127.0.0.1:7890
+```
+
+设完再跑上面那条安装命令。嫌麻烦还有两条路：换 PowerShell 跑 `irm` 那条（它默认走系统代理，没这毛病），或在代理客户端里打开 TUN 模式（有的叫「增强模式」「虚拟网卡」），让全部流量强制过代理。
+
 另外，Windows 原生环境**推荐顺手装个 [Git for Windows](https://git-scm.com/downloads/win)**，它给 Claude Code 提供 Git Bash；不装会改用 PowerShell 跑命令（也能用，只是部分 Bash 脚本受限）。WSL 则不需要它。
 
 ### Windows 选 WSL 还是原生？
@@ -269,6 +278,7 @@ rm -f .mcp.json
 | `irm is not recognized` | 你在 CMD 里跑了 PowerShell 命令 | 换成 CMD 安装命令，或打开 PowerShell |
 | `'&&' is not valid` | 你在 PowerShell 里跑了 CMD 命令 | 换成 PowerShell 的 `irm` 命令 |
 | `bash is not recognized` | 在 Windows 上跑了 Mac/Linux 命令 | 换成 PowerShell 的 `irm` 命令 |
+| 开着魔法上网，CMD 里装仍卡住 / 超时 | CMD 的 `curl` 不走系统代理，等于直连 | CMD 里先 `set https_proxy=...` 再装（见第 02 节），或换 PowerShell / 开 TUN 模式 |
 | Linux 安装时 `Killed` | 内存不够（OOM 杀进程） | 加交换空间（见下方），Claude Code 要 4GB+ RAM |
 | `Error loading shared library` | 安装器误判了系统 libc 类型，拉了错误变体 | 见官方 musl/glibc 排查 |
 | 登录后 `403 Forbidden` | 订阅无效 / 账号没权限 | 查订阅状态，或确认 Console 账号有对应角色 |

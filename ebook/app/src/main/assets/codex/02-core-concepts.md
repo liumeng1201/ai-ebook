@@ -90,7 +90,7 @@
 |---|---|---|
 | `untrusted` | 不在「可信集合」里的命令，跑之前先问 | 只防陌生命令 |
 | `on-request` | 默认在沙箱里干，**需要出圈时才停下来问** | 最常用的平衡档 |
-| `never` | 不弹审批，闷头干 | 全自动，配合完全访问才有意义 |
+| `never` | 不弹审批，闷头干 | 自动化常用；权限仍由沙箱决定，配合完全访问才有意义 |
 
 注意：这里的 `untrusted / on-request / never` 是官方文档里的三种审批策略——它们和沙箱模式是两个独立的维度，分开配置、分开理解。
 
@@ -221,6 +221,12 @@ codex
 ```text
 Permissions updated: read-only
 ```
+
+> ⚠️ **新版菜单可能不同**：codex-cli **0.142** 起，官方推出了 [permission profiles](https://developers.openai.com/codex/permissions)（标记 **Beta，may change**）替代旧的「Read Only / Auto / Full Access」预设——你的 `/permissions` 菜单可能变成了 `Ask for approval` / `Approval for me` / `Full access` 这类**审批策略**的档（不再直接出现 `Read Only`）。
+>
+> 如果你看不到 `Read Only` 选项，**走旧 sandbox 模式最稳**（官方保留兼容）：先退出会话，用 `codex --sandbox read-only` 重新进入；或在 `~/.codex/config.toml` 写 `sandbox_mode = "read-only"` 永久生效。本节后续实验按这套兜底全部跑得通。
+>
+> 这块属于「实验性，可能变化」，本教程后续涉及 `/permissions` 切只读的地方都同此说明，不再重复。
 
 **第三步：让它干一件「要写文件」的事，看它被拦。**
 

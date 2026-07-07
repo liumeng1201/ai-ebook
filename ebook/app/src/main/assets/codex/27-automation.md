@@ -84,6 +84,20 @@
 
 **类比：给保安排的那张「值班 + 交接」表。** 这份 YAML 其实是两班人接力：**第一班（`codex` job）是审查保安**，PR 一开他上岗审、把意见写在一张纸条上（`final-message` 输出）；**第二班（`post_feedback` job）是跑腿的**，等第一班审完、纸条上确实有字，他才把纸条贴到 PR 评论区。为什么要分两班？下一节讲权限时你会明白——**审查那班手里几乎没权限（只能读），贴评论那班才有写权限**，这是故意的安全设计。
 
+### 先讲清「这套东西到底配在哪、在哪儿跑」
+
+很多读者一上来就卡在「我抄了 YAML，怎么没反应」——其实抄 YAML 只是中间一步，前后还有几步「隐含前提」。下面这张 5 步清单把整条链路串清楚，照着对就不会漏：
+
+| 步骤 | 在哪做 | 干啥 |
+|---|---|---|
+| 1 · 仓库前提 | **GitHub** | 仓库托管在 GitHub 上、Actions 没被禁（个人仓库默认开） |
+| 2 · 加 Secret | 仓库 → **Settings → Secrets and variables → Actions** | 新建 `OPENAI_API_KEY`，下面 YAML 里 `secrets.OPENAI_API_KEY` 那处引用读的就是这个 |
+| 3 · 提两个文件 | **仓库根目录** | `.github/workflows/codex-review.yml` 主 workflow + `.github/codex/prompts/review.md` 审查指令——**两个都是仓库里的文件、要 commit + push**，不是写到本机 `~/.codex`，也不是在 GitHub 网页某个设置框里填 |
+| 4 · 触发它 | **GitHub** | 干 YAML 里 `on:` 指定的事——这份示例是 PR 的 `opened` / `synchronize` / `reopened`，所以**开 PR 或往 PR 推新提交**就触发 |
+| 5 · runner 跑起来 | **GitHub 云端 runner** | Actions 在云端 runner 上跑 `openai/codex-action@v1`，它**内部装 Codex CLI 并启动一次 `codex exec`** —— 所以 YAML 里你看不到 `codex exec` 这条命令，它被 action 封装了 |
+
+> ⚠️ **这条路不依赖把仓库托管到 Codex**（那是 Codex Cloud 的事）——只要仓库在 GitHub、Actions 能跑、Secret 配好、两个文件 commit 进去了，YAML 就工作。**GitHub Actions 路线 vs Codex Cloud 路线**是平行的两套，别混。
+
 先看完整示例（在官方示例基础上做了精简，照着抄改改就能用）：
 
 ```yaml

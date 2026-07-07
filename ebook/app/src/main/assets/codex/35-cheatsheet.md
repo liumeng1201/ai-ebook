@@ -134,7 +134,7 @@
 | 配置键 | 作用 | 取值示例 |
 | --- | --- | --- |
 | `model` | 默认模型 | `"gpt-5.5"` |
-| `model_reasoning_effort` | 推理强度 | `minimal` / `low` / `medium` / `high` / `xhigh` |
+| `model_reasoning_effort` | 推理强度（可选值随模型变化） | 常见：`none` / `minimal` / `low` / `medium` / `high` / `xhigh` |
 | `model_reasoning_summary` | 推理摘要详细度 | `auto` / `concise` / `detailed` / `none` |
 | `service_tier` | 服务层级 | `flex` / `fast`（提速相关，搭配 `/fast`） |
 | `sandbox_mode` | 沙箱档位 | `read-only` / `workspace-write` / `danger-full-access` |
@@ -201,10 +201,11 @@ codex --sandbox workspace-write --ask-for-approval on-request
 
 `gpt-5.2` 和 `gpt-5.3-codex` 已弃用，别再写进配置或 `--model` 里。
 
-推理强度由 `model_reasoning_effort` 控制，五档：
+推理强度由 `model_reasoning_effort` 控制，**可选档位随模型变化**（哪几档能用，以 `/model` 面板和当前模型文档为准），常见档位：
 
 | 取值 | 思考力度 | 典型场景 |
 | --- | --- | --- |
+| `none` | 完全不额外想（模型相关） | 纯指令执行 |
 | `minimal` | 几乎不想，最快 | 改 typo、重命名、跑个命令 |
 | `low` | 略想一下 | 小修小补 |
 | `medium` | 默认甜区 | 绝大多数日常编程 |

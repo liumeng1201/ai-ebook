@@ -260,14 +260,14 @@ Codex 的成本观测，主要还是靠上一节那个 **Analytics 仪表盘 / A
 
 最后给你一份**上线前自检清单**，铺开前照着过一遍：
 
-- [ ] 确定了用本地 / 云端 / 还是两个都开（直接决定数据流向）
-- [ ] 指定好三类负责人：工作区 owner、安全 owner、分析 owner
-- [ ] 建好 Codex Users 与 Codex Admin 两个组，管理权限只给少数人
-- [ ] SSO / MFA / SCIM 接好，成员变动可自动同步、可审计
-- [ ] 下发了 `requirements.toml`，封死裸奔档、定好安全底线
-- [ ] Analytics 与 Compliance API key 配好，知道日志去哪导、留多久
-- [ ] access token 都设了有限期、有轮换计划
-- [ ] 定好成本复盘节奏和「成功长什么样」
+- 确定了用本地 / 云端 / 还是两个都开（直接决定数据流向）
+- 指定好三类负责人：工作区 owner、安全 owner、分析 owner
+- 建好 Codex Users 与 Codex Admin 两个组，管理权限只给少数人
+- SSO / MFA / SCIM 接好，成员变动可自动同步、可审计
+- 下发了 `requirements.toml`，封死裸奔档、定好安全底线
+- Analytics 与 Compliance API key 配好，知道日志去哪导、留多久
+- access token 都设了有限期、有轮换计划
+- 定好成本复盘节奏和「成功长什么样」
 
 ---
 
