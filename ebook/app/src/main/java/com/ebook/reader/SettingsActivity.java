@@ -14,13 +14,15 @@ import androidx.appcompat.widget.Toolbar;
 import com.ebook.reader.util.UpdateManager;
 import com.ebook.reader.util.VersionInfo;
 
+import java.util.List;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private TextView tvAppVersion;
     private LinearLayout containerBookVersions;
-    private Button btnCheckUpdate;
+    private Button btnCheckApp;
+    private Button btnCheckContent;
     private TextView tvLastCheck;
 
     @Override
@@ -39,14 +41,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         tvAppVersion = findViewById(R.id.tv_app_version);
         containerBookVersions = findViewById(R.id.container_book_versions);
-        btnCheckUpdate = findViewById(R.id.btn_check_update);
+        btnCheckApp = findViewById(R.id.btn_check_app);
+        btnCheckContent = findViewById(R.id.btn_check_content);
         tvLastCheck = findViewById(R.id.tv_last_check);
 
         // 1. 加载版本信息
         loadVersionInfo();
 
         // 2. 检查更新按钮
-        btnCheckUpdate.setOnClickListener(v -> checkForUpdates());
+        btnCheckApp.setOnClickListener(v -> checkAppUpdate());
+        btnCheckContent.setOnClickListener(v -> checkContentUpdate());
 
         // 3. 主题切换
         RadioGroup themeGroup = findViewById(R.id.theme_group);
@@ -106,56 +110,58 @@ public class SettingsActivity extends AppCompatActivity {
                 tv.setText(String.format(Locale.CHINA, "  •  %s  %s", book.name, sha));
                 tv.setTextSize(15f);
                 tv.setPadding(0, 4, 0, 4);
-                tv.setTextColor(getColor(
-                    android.R.color.darker_gray));
+                tv.setTextColor(getColor(android.R.color.darker_gray));
                 containerBookVersions.addView(tv);
             }
         }
     }
 
-    /**
-     * 检查更新
-     */
-    private void checkForUpdates() {
-        btnCheckUpdate.setEnabled(false);
-        btnCheckUpdate.setText("检查中...");
+    // ============================================================
+    // App 更新检查
+    // ============================================================
 
-        UpdateManager.checkAllUpdates(this, new UpdateManager.UpdateCallback() {
+    private void checkAppUpdate() {
+        btnCheckApp.setEnabled(false);
+        btnCheckApp.setText("检查中...");
+
+        UpdateManager.checkAppUpdate(this, new UpdateManager.UpdateCallback() {
             @Override
             public void onChecking() {
-                runOnUiThread(() -> {
-                    btnCheckUpdate.setText("检查中...");
-                });
+                runOnUiThread(() -> btnCheckApp.setText("检查中..."));
             }
 
             @Override
             public void onUpdateAvailable(UpdateManager.UpdateType type, String version, String releaseNotes) {
                 runOnUiThread(() -> {
-                    btnCheckUpdate.setEnabled(true);
-                    btnCheckUpdate.setText("  🔄  检查更新");
+                    btnCheckApp.setEnabled(true);
+                    btnCheckApp.setText("📱 App 更新");
                     updateLastCheckTime();
 
-                    String typeLabel;
-                    switch (type) {
-                        case APP:
-                            typeLabel = "📱 App 更新";
-                            break;
-                        case CONTENT:
-                            typeLabel = "📖 内容更新";
-                            break;
-                        default:
-                            typeLabel = "📱📖 App + 内容更新";
-                            break;
-                    }
-
                     new AlertDialog.Builder(SettingsActivity.this)
-                            .setTitle(typeLabel)
+                            .setTitle("📱 App 更新")
                             .setMessage("发现新版本: " + version + "\n\n" + releaseNotes)
-                            .setPositiveButton("立即更新", (dialog, which) -> {
+                            .setPositiveButton("立即下载", (dialog, which) -> {
                                 Toast.makeText(SettingsActivity.this,
-                                        "正在下载更新...", Toast.LENGTH_SHORT).show();
-                                // 触发下载（后台静默下载内容包）
-                                UpdateManager.checkContentUpdate(SettingsActivity.this);
+                                        "正在下载 APK...", Toast.LENGTH_SHORT).show();
+                                // 后台下载并安装
+                                new Thread(() -> {
+                                    List<UpdateManager.GitHubRelease> releases;
+                                    try {
+                                        releases = UpdateManager.fetchReleases();
+                                        if (releases != null) {
+                                            String apkUrl = UpdateManager.getAppApkUrl(
+                                                    releases, version);
+                                            if (apkUrl != null) {
+                                                runOnUiThread(() -> Toast.makeText(
+                                                        SettingsActivity.this,
+                                                        "APK 下载中，稍后会自动安装",
+                                                        Toast.LENGTH_LONG).show());
+                                                UpdateManager.downloadAndInstallApk(
+                                                        SettingsActivity.this, apkUrl);
+                                            }
+                                        }
+                                    } catch (Exception ignored) {}
+                                }).start();
                             })
                             .setNegativeButton("稍后", null)
                             .show();
@@ -165,19 +171,95 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onNoUpdate() {
                 runOnUiThread(() -> {
-                    btnCheckUpdate.setEnabled(true);
-                    btnCheckUpdate.setText("  🔄  检查更新");
+                    btnCheckApp.setEnabled(true);
+                    btnCheckApp.setText("📱 App 更新");
                     updateLastCheckTime();
                     Toast.makeText(SettingsActivity.this,
-                            "已是最新版本", Toast.LENGTH_SHORT).show();
+                            "App 已是最新版本", Toast.LENGTH_SHORT).show();
                 });
             }
 
             @Override
             public void onError(String message) {
                 runOnUiThread(() -> {
-                    btnCheckUpdate.setEnabled(true);
-                    btnCheckUpdate.setText("  🔄  检查更新");
+                    btnCheckApp.setEnabled(true);
+                    btnCheckApp.setText("📱 App 更新");
+                    Toast.makeText(SettingsActivity.this,
+                            "检查失败: " + message, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    // ============================================================
+    // 内容更新检查
+    // ============================================================
+
+    private void checkContentUpdate() {
+        btnCheckContent.setEnabled(false);
+        btnCheckContent.setText("检查中...");
+
+        UpdateManager.checkContentUpdateManual(this, new UpdateManager.UpdateCallback() {
+            @Override
+            public void onChecking() {
+                runOnUiThread(() -> btnCheckContent.setText("检查中..."));
+            }
+
+            @Override
+            public void onUpdateAvailable(UpdateManager.UpdateType type, String version, String releaseNotes) {
+                runOnUiThread(() -> {
+                    btnCheckContent.setEnabled(true);
+                    btnCheckContent.setText("📖 内容更新");
+                    updateLastCheckTime();
+
+                    new AlertDialog.Builder(SettingsActivity.this)
+                            .setTitle("📖 内容更新")
+                            .setMessage("发现新版本: " + version + "\n\n新内容已就绪，立即下载？")
+                            .setPositiveButton("立即下载", (dialog, which) -> {
+                                Toast.makeText(SettingsActivity.this,
+                                        "正在下载内容包...", Toast.LENGTH_SHORT).show();
+                                // 后台下载
+                                new Thread(() -> {
+                                    List<UpdateManager.GitHubRelease> releases;
+                                    try {
+                                        releases = UpdateManager.fetchReleases();
+                                        if (releases != null) {
+                                            int cv = UpdateManager.getLatestContentVersion(releases);
+                                            String url = UpdateManager.getContentBundleUrl(
+                                                    releases, cv);
+                                            if (url != null) {
+                                                UpdateManager.downloadContentBundle(
+                                                        SettingsActivity.this, url, cv);
+                                                runOnUiThread(() -> Toast.makeText(
+                                                        SettingsActivity.this,
+                                                        "内容更新完成，重启后生效",
+                                                        Toast.LENGTH_LONG).show());
+                                            }
+                                        }
+                                    } catch (Exception ignored) {}
+                                }).start();
+                            })
+                            .setNegativeButton("稍后", null)
+                            .show();
+                });
+            }
+
+            @Override
+            public void onNoUpdate() {
+                runOnUiThread(() -> {
+                    btnCheckContent.setEnabled(true);
+                    btnCheckContent.setText("📖 内容更新");
+                    updateLastCheckTime();
+                    Toast.makeText(SettingsActivity.this,
+                            "内容已是最新版本", Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onError(String message) {
+                runOnUiThread(() -> {
+                    btnCheckContent.setEnabled(true);
+                    btnCheckContent.setText("📖 内容更新");
                     Toast.makeText(SettingsActivity.this,
                             "检查失败: " + message, Toast.LENGTH_SHORT).show();
                 });

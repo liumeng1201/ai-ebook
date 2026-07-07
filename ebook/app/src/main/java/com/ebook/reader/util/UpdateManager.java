@@ -94,7 +94,7 @@ public class UpdateManager {
                 List<GitHubRelease> releases = fetchReleases();
                 if (releases == null || releases.isEmpty()) return;
 
-                int latestContent = getLatestContentVersionFromReleases(releases);
+                int latestContent = getLatestContentVersion(releases);
                 if (latestContent > getStoredContentVersion(context)) {
                     String downloadUrl = getContentDownloadUrlFromReleases(releases, latestContent);
                     if (downloadUrl != null) {
@@ -109,9 +109,9 @@ public class UpdateManager {
     }
 
     /**
-     * 手动检查所有更新（App + 内容），弹窗反馈
+     * 手动检查 App 更新
      */
-    public static void checkAllUpdates(Context context, UpdateCallback callback) {
+    public static void checkAppUpdate(Context context, UpdateCallback callback) {
         callback.onChecking();
 
         new Thread(() -> {
@@ -128,44 +128,54 @@ public class UpdateManager {
                     return;
                 }
 
-                boolean hasAppUpdate = false;
-                boolean hasContentUpdate = false;
-                String appVersion = "";
-                String contentVersion = "";
-                String releaseNotes = "";
-
-                // --- 检查 App 更新 ---
                 for (GitHubRelease release : releases) {
-                    if (release.tagName != null && release.tagName.startsWith("v1.0.")) {
-                        try {
-                            int remoteCode = Integer.parseInt(release.tagName.substring(4));
-                            if (remoteCode > local.appVersionCode) {
-                                hasAppUpdate = true;
-                                appVersion = release.tagName;
-                                releaseNotes = release.body != null ? release.body : "";
-                                break;
-                            }
-                        } catch (NumberFormatException ignored) {}
+                    if (release.tagName != null && release.tagName.startsWith("v")) {
+                        String[] parts = release.tagName.split("\\.");
+                        if (parts.length >= 3) {
+                            try {
+                                int remoteCode = Integer.parseInt(parts[parts.length - 1]);
+                                if (remoteCode > local.appVersionCode) {
+                                    callback.onUpdateAvailable(UpdateType.APP,
+                                            release.tagName,
+                                            release.body != null ? release.body : "");
+                                    return;
+                                }
+                            } catch (NumberFormatException ignored) {}
+                        }
                     }
                 }
 
-                // --- 检查内容更新 ---
-                int latestContentVersion = getLatestContentVersionFromReleases(releases);
-                int storedContent = getStoredContentVersion(context);
-                if (latestContentVersion > storedContent) {
-                    hasContentUpdate = true;
-                    contentVersion = "content-" + latestContentVersion;
+                recordManualCheckTime(context);
+                callback.onNoUpdate();
+
+            } catch (Exception e) {
+                callback.onError("检查失败: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    /**
+     * 手动检查内容更新
+     */
+    public static void checkContentUpdateManual(Context context, UpdateCallback callback) {
+        callback.onChecking();
+
+        new Thread(() -> {
+            try {
+                List<GitHubRelease> releases = fetchReleases();
+                if (releases == null || releases.isEmpty()) {
+                    callback.onError("无法连接到 GitHub");
+                    return;
                 }
+
+                int latestContent = getLatestContentVersion(releases);
+                int storedContent = getStoredContentVersion(context);
 
                 recordManualCheckTime(context);
 
-                if (hasAppUpdate && hasContentUpdate) {
-                    callback.onUpdateAvailable(UpdateType.BOTH,
-                            appVersion + " + " + contentVersion, releaseNotes);
-                } else if (hasAppUpdate) {
-                    callback.onUpdateAvailable(UpdateType.APP, appVersion, releaseNotes);
-                } else if (hasContentUpdate) {
-                    callback.onUpdateAvailable(UpdateType.CONTENT, contentVersion, "");
+                if (latestContent > storedContent) {
+                    callback.onUpdateAvailable(UpdateType.CONTENT,
+                            "content-" + latestContent, "");
                 } else {
                     callback.onNoUpdate();
                 }
@@ -305,7 +315,7 @@ public class UpdateManager {
     /**
      * 从 releases 列表中提取最新 content 版本号
      */
-    private static int getLatestContentVersionFromReleases(List<GitHubRelease> releases) {
+    public static int getLatestContentVersion(List<GitHubRelease> releases) {
         int max = 0;
         for (GitHubRelease r : releases) {
             if (r.tagName != null && r.tagName.startsWith("content-")) {
@@ -334,11 +344,34 @@ public class UpdateManager {
         return null;
     }
 
+    /**
+     * 从 releases 中查找指定 App 版本标签的 APK 下载链接
+     */
+    public static String getAppApkUrl(List<GitHubRelease> releases, String tagName) {
+        for (GitHubRelease r : releases) {
+            if (tagName.equals(r.tagName) && r.assets != null) {
+                for (GitHubAsset asset : r.assets) {
+                    if (asset.name != null && asset.name.endsWith(".apk")) {
+                        return asset.browserDownloadUrl;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从 releases 中获取指定内容版本的下载 URL
+     */
+    public static String getContentBundleUrl(List<GitHubRelease> releases, int contentVersion) {
+        return getContentDownloadUrlFromReleases(releases, contentVersion);
+    }
+
     // ============================================================
     // 6. HTTP / 文件工具
     // ============================================================
 
-    private static List<GitHubRelease> fetchReleases() throws IOException {
+    public static List<GitHubRelease> fetchReleases() throws IOException {
         String json = httpGet(GITHUB_API + "?per_page=10");
         Type listType = new TypeToken<List<GitHubRelease>>(){}.getType();
         return new Gson().fromJson(json, listType);
