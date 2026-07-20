@@ -6,6 +6,13 @@ android {
     namespace 'com.ebook.reader'
     compileSdk 34
 
+    sourceSets {
+        main {
+            // Content bundles are published separately and must not inflate the APK.
+            assets.srcDirs = []
+        }
+    }
+
     defaultConfig {
         applicationId 'com.ebook.reader'
         minSdk 29

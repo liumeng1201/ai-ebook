@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 import io.noties.markwon.Markwon;
 import io.noties.markwon.ext.tables.TablePlugin;
 import io.noties.markwon.image.ImagesPlugin;
-import io.noties.markwon.image.file.FileSchemeHandler;
 
 public class ReaderActivity extends AppCompatActivity {
 
@@ -65,15 +64,11 @@ public class ReaderActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.reader_scroll);
         progressBar = findViewById(R.id.reader_progress);
 
-        // 初始化 Markwon
-        //   - ImagesPlugin: 双 handler — assets 文件 + 本地存储文件
-        //   - TablePlugin: 表格渲染
+        // Initialize Markdown rendering for files in the downloaded content bundle.
         markwon = Markwon.builder(this)
                 .usePlugin(ImagesPlugin.create(new ImagesPlugin.ImagesConfigure() {
                     @Override
                     public void configureImages(ImagesPlugin plugin) {
-                        plugin.addSchemeHandler(
-                                FileSchemeHandler.createWithAssets(ReaderActivity.this));
                         plugin.addSchemeHandler(
                                 new LocalFileSchemeHandler(ReaderActivity.this));
                     }
@@ -81,12 +76,14 @@ public class ReaderActivity extends AppCompatActivity {
                 .usePlugin(TablePlugin.create(this))
                 .build();
 
-        // 解析目录（优先读取本地下载内容，fallback 到 bundled assets）
+        // Parse the table of contents from the downloaded content bundle.
         try {
             InputStream tocIs = UpdateManager.openContent(this, jsonFile);
             tocTree = BookJsonParser.parseTocTree(tocIs);
         } catch (Exception e) {
-            tocTree = BookJsonParser.parseTocTree(getAssets(), jsonFile);
+            Toast.makeText(this, "内容包不可用，请先下载内容包", Toast.LENGTH_LONG).show();
+            finish();
+            return;
         }
 
         // 确定初始章节
@@ -156,7 +153,7 @@ public class ReaderActivity extends AppCompatActivity {
         // 去除 YAML front matter
         String cleaned = MarkdownCleaner.removeYamlFrontMatter(mdContent);
 
-        // 将相对图片路径转为 file:///android_asset/ 路径
+        // Resolve relative image paths against the downloaded content bundle.
         String assetDir = herf.substring(0, herf.lastIndexOf('/') + 1);
         cleaned = resolveImagePaths(cleaned, assetDir);
 
@@ -202,9 +199,7 @@ public class ReaderActivity extends AppCompatActivity {
     /**
      * 将 markdown 中的相对图片路径转换为实际可访问的 URI。
      *
-     * 优先级：
-     *   1. 图片在本地下载内容中 → localfile:///absolute/path
-     *   2. 图片在 bundled assets → file:///android_asset/path
+     * Images are resolved only from the downloaded content bundle.
      */
     private String resolveImagePaths(String markdown, String assetDir) {
         Pattern pattern = Pattern.compile(
@@ -231,10 +226,6 @@ public class ReaderActivity extends AppCompatActivity {
                 }
             }
 
-            // Fallback 到 bundled assets
-            matcher.appendReplacement(sb,
-                    Matcher.quoteReplacement(
-                            "![" + alt + "](file:///android_asset/" + resolved + ")"));
         }
         matcher.appendTail(sb);
         return sb.toString();

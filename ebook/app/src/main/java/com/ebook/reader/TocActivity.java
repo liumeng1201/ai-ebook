@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ebook.reader.model.TocNode;
 import com.ebook.reader.util.BookJsonParser;
+import com.ebook.reader.util.UpdateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,12 @@ public class TocActivity extends AppCompatActivity {
         tocList = findViewById(R.id.toc_list);
         tocList.setLayoutManager(new LinearLayoutManager(this));
 
-        // 解析目录树
-        tocTree = BookJsonParser.parseTocTree(getAssets(), jsonFile);
+        try {
+            tocTree = BookJsonParser.parseTocTree(UpdateManager.openContent(this, jsonFile));
+        } catch (Exception e) {
+            finish();
+            return;
+        }
         rebuildVisible();
 
         adapter = new TocAdapter();

@@ -1,12 +1,12 @@
 package com.ebook.reader;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +18,16 @@ import com.ebook.reader.util.BookJsonParser;
 import com.ebook.reader.util.UpdateManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BookListActivity extends AppCompatActivity {
 
+    private final List<String> jsonFiles = new ArrayList<>();
+    private final List<String> bookNames = new ArrayList<>();
     private RecyclerView bookList;
-    private List<String> jsonFiles = new ArrayList<>();
-    private List<String> bookNameCache = new ArrayList<>();
-    private List<String> jsonSources = new ArrayList<>(); // "assets" or "local"
+    private View emptyState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,14 @@ public class BookListActivity extends AppCompatActivity {
 
         bookList = findViewById(R.id.book_list);
         bookList.setLayoutManager(new LinearLayoutManager(this));
+        emptyState = findViewById(R.id.empty_content_state);
+        Button downloadButton = findViewById(R.id.btn_download_content);
+        downloadButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadBooks();
     }
 
@@ -65,59 +71,28 @@ public class BookListActivity extends AppCompatActivity {
 
     private void loadBooks() {
         jsonFiles.clear();
-        bookNameCache.clear();
-        jsonSources.clear();
+        bookNames.clear();
 
-        // 1. 从 bundled assets 扫描
-        AssetManager am = getAssets();
-        try {
-            String[] files = am.list("");
+        File contentDir = UpdateManager.getContentDir(this);
+        if (contentDir != null) {
+            String[] files = contentDir.list();
             if (files != null) {
                 Arrays.sort(files);
                 for (String file : files) {
-                    if (file.endsWith(".json") && !file.equals("images")
-                            && !file.equals("version.json")) {
-                        String bookName = BookJsonParser.parseBookName(am, file);
+                    if (file.endsWith(".json") && !"version.json".equals(file)) {
+                        String bookName = BookJsonParser.parseBookName(contentDir, file);
                         if (bookName != null && !bookName.isEmpty()) {
                             jsonFiles.add(file);
-                            bookNameCache.add(bookName);
-                            jsonSources.add("assets");
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 2. 从本地下载内容扫描（补充 assets 中没有的书，或覆盖已有）
-        File localContent = UpdateManager.getContentDir(this);
-        if (localContent != null) {
-            String[] localFiles = localContent.list();
-            if (localFiles != null) {
-                Arrays.sort(localFiles);
-                for (String file : localFiles) {
-                    if (file.endsWith(".json") && !file.equals("version.json")) {
-                        // 已存在则更新名称（本地内容可能更新了 book 名称）
-                        int idx = jsonFiles.indexOf(file);
-                        if (idx >= 0) {
-                            // 更新 jsonSources 标记为 local 表示优先
-                            jsonSources.set(idx, "local");
-                        } else {
-                            // 新增的本地书籍
-                            String bookName = BookJsonParser.parseBookName(
-                                    am, file, localContent);
-                            if (bookName != null && !bookName.isEmpty()) {
-                                jsonFiles.add(file);
-                                bookNameCache.add(bookName);
-                                jsonSources.add("local");
-                            }
+                            bookNames.add(bookName);
                         }
                     }
                 }
             }
         }
 
+        boolean hasBooks = !jsonFiles.isEmpty();
+        bookList.setVisibility(hasBooks ? View.VISIBLE : View.GONE);
+        emptyState.setVisibility(hasBooks ? View.GONE : View.VISIBLE);
         bookList.setAdapter(new BookAdapter());
     }
 
@@ -132,16 +107,9 @@ public class BookListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             String jsonFile = jsonFiles.get(position);
-            String bookName = bookNameCache.get(position);
-            String source = jsonSources.get(position);
-
-            holder.title.setText(bookName != null ? bookName : jsonFile);
-            String subtitle = jsonFile;
-            if ("local".equals(source)) {
-                subtitle += " (已更新)";
-            }
-            holder.subtitle.setText(subtitle);
-
+            String bookName = bookNames.get(position);
+            holder.title.setText(bookName);
+            holder.subtitle.setText(jsonFile);
             holder.card.setOnClickListener(v -> {
                 Intent intent = new Intent(BookListActivity.this, ReaderActivity.class);
                 intent.putExtra("jsonFile", jsonFile);
@@ -156,9 +124,9 @@ public class BookListActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            View card;
-            TextView title;
-            TextView subtitle;
+            final View card;
+            final TextView title;
+            final TextView subtitle;
 
             ViewHolder(View itemView) {
                 super(itemView);
