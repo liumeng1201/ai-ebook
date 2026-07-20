@@ -9,6 +9,8 @@ import java.util.List;
  * 由 sync_assets.py 自动生成，Android 端读取用于版本展示和更新检测
  */
 public class VersionInfo {
+    @SerializedName("schema_version")
+    public int schemaVersion;
     @SerializedName("app_version_code")
     public int appVersionCode;
 
@@ -36,5 +38,14 @@ public class VersionInfo {
 
         @SerializedName("content_sha")
         public String contentSha;
+
+        @SerializedName("content_version")
+        public String contentVersion;
+
+        @SerializedName("archive_name")
+        public String archiveName;
+
+        @SerializedName("download_url")
+        public String downloadUrl;
     }
 }

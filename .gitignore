@@ -4,6 +4,8 @@ ebook/app/build/
 local.properties
 *.apk
 *.aab
+content-release/
+content-release-test/
 *.jks
 *.keystore
 

@@ -12,10 +12,12 @@ sync_assets.py — 统一内容同步脚本
 用法: python sync_assets.py
 """
 
+import argparse
 import json
 import os
 import shutil
 import subprocess
+import zipfile
 from datetime import datetime, timezone
 
 
@@ -651,7 +653,7 @@ def sync_vibe_vibe():
 # 4. 版本信息生成
 # ============================================================
 
-def generate_version_json(versions):
+def generate_version_json(versions, release_tag=None, repository=None):
     """生成 version.json 到 assets 目录"""
     books = [
         {
@@ -660,6 +662,8 @@ def generate_version_json(versions):
             "json_file": "claude-code.json",
             "source_repo": "ai-coding-guide",
             "content_sha": versions["content_shas"].get("ai-coding-guide", "unknown"),
+            "content_version": versions["content_shas"].get("ai-coding-guide", "unknown"),
+            "archive_name": "claude-code.zip",
         },
         {
             "id": "codex",
@@ -667,6 +671,8 @@ def generate_version_json(versions):
             "json_file": "codex.json",
             "source_repo": "ai-coding-guide",
             "content_sha": versions["content_shas"].get("ai-coding-guide", "unknown"),
+            "content_version": versions["content_shas"].get("ai-coding-guide", "unknown"),
+            "archive_name": "codex.zip",
         },
         {
             "id": "easy-vibe",
@@ -674,6 +680,8 @@ def generate_version_json(versions):
             "json_file": "easy-vibe.json",
             "source_repo": "easy-vibe",
             "content_sha": versions["content_shas"].get("easy-vibe", "unknown"),
+            "content_version": versions["content_shas"].get("easy-vibe", "unknown"),
+            "archive_name": "easy-vibe.zip",
         },
         {
             "id": "vibe-vibe",
@@ -681,10 +689,20 @@ def generate_version_json(versions):
             "json_file": "vibe-vibe.json",
             "source_repo": "vibe-vibe",
             "content_sha": versions["content_shas"].get("vibe-vibe", "unknown"),
+            "content_version": versions["content_shas"].get("vibe-vibe", "unknown"),
+            "archive_name": "vibe-vibe.zip",
         },
     ]
 
+    for book in books:
+        if repository and release_tag:
+            book["download_url"] = (
+                f"https://github.com/{repository}/releases/download/{release_tag}/"
+                f"{book['archive_name']}"
+            )
+
     version_data = {
+        "schema_version": 2,
         "app_version_code": versions["app_version_code"],
         "app_version_name": versions["app_version_name"],
         "app_commit_sha": versions["app_commit_sha"],
@@ -692,11 +710,35 @@ def generate_version_json(versions):
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
 
-    json_path = os.path.join(ASSETS_DIR, "version.json")
+    json_path = os.path.join(ASSETS_DIR, "manifest.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(version_data, f, ensure_ascii=False, indent=2)
-    print(f"\n  [VERSION] 已生成: version.json")
+    print(f"\n  [MANIFEST] 已生成: manifest.json")
     return version_data
+
+
+def package_books(output_dir):
+    """将每本书的目录 JSON 与其资源目录打成独立 ZIP。"""
+    os.makedirs(output_dir, exist_ok=True)
+    for book_id in ("claude-code", "codex", "easy-vibe", "vibe-vibe"):
+        archive_path = os.path.join(output_dir, f"{book_id}.zip")
+        json_path = os.path.join(ASSETS_DIR, f"{book_id}.json")
+        content_dir = os.path.join(ASSETS_DIR, book_id)
+        with zipfile.ZipFile(archive_path, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.write(json_path, os.path.basename(json_path))
+            for root, _, files in os.walk(content_dir):
+                for filename in files:
+                    file_path = os.path.join(root, filename)
+                    archive.write(file_path, os.path.relpath(file_path, ASSETS_DIR))
+        print(f"  [PACKAGE] {archive_path}")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="同步并拆分电子书内容包")
+    parser.add_argument("--output-dir", help="内容包与 manifest 输出目录")
+    parser.add_argument("--release-tag", default=os.environ.get("CONTENT_RELEASE_TAG"))
+    parser.add_argument("--repository", default=os.environ.get("GITHUB_REPOSITORY"))
+    return parser.parse_args()
 
 
 # ============================================================
@@ -704,6 +746,7 @@ def generate_version_json(versions):
 # ============================================================
 
 def main():
+    args = parse_args()
     print("=" * 60)
     print("统一内容同步 — sync_assets.py")
     print("=" * 60)
@@ -728,7 +771,12 @@ def main():
     sync_vibe_vibe()
 
     # 3. 生成 version.json
-    generate_version_json(versions)
+    generate_version_json(versions, args.release_tag, args.repository)
+
+    if args.output_dir:
+        package_books(args.output_dir)
+        shutil.copy2(os.path.join(ASSETS_DIR, "manifest.json"),
+                     os.path.join(args.output_dir, "manifest.json"))
 
     # 4. 汇总
     print(f"\n{'='*60}")

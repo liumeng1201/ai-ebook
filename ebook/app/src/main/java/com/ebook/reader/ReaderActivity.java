@@ -35,6 +35,7 @@ public class ReaderActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_TOC = 1001;
 
     private String jsonFile;
+    private String bookId;
     private String bookName;
     private String currentHerf;
     private TextView contentView;
@@ -49,6 +50,7 @@ public class ReaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reader);
 
         jsonFile = getIntent().getStringExtra("jsonFile");
+        bookId = getIntent().getStringExtra("bookId");
         bookName = getIntent().getStringExtra("bookName");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -78,7 +80,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         // Parse the table of contents from the downloaded content bundle.
         try {
-            InputStream tocIs = UpdateManager.openContent(this, jsonFile);
+            InputStream tocIs = UpdateManager.openContent(this, bookId, jsonFile);
             tocTree = BookJsonParser.parseTocTree(tocIs);
         } catch (Exception e) {
             Toast.makeText(this, "内容包不可用，请先下载内容包", Toast.LENGTH_LONG).show();
@@ -106,6 +108,7 @@ public class ReaderActivity extends AppCompatActivity {
         findViewById(R.id.btn_toc).setOnClickListener(v -> {
             Intent intent = new Intent(ReaderActivity.this, TocActivity.class);
             intent.putExtra("jsonFile", jsonFile);
+            intent.putExtra("bookId", bookId);
             intent.putExtra("bookName", bookName);
             intent.putExtra("currentHerf", currentHerf);
             startActivityForResult(intent, REQUEST_CODE_TOC);
@@ -166,7 +169,7 @@ public class ReaderActivity extends AppCompatActivity {
 
     private String readAssetContent(String assetPath) {
         try {
-            InputStream is = UpdateManager.openContent(this, assetPath);
+            InputStream is = UpdateManager.openContent(this, bookId, assetPath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             StringBuilder sb = new StringBuilder();
             String line;
@@ -213,7 +216,7 @@ public class ReaderActivity extends AppCompatActivity {
             String resolved = resolveRelativePath(assetDir, path);
 
             // 检查本地下载内容中是否有此图片
-            File contentDir = UpdateManager.getContentDir(ReaderActivity.this);
+            File contentDir = UpdateManager.getBookDir(ReaderActivity.this, bookId);
             if (contentDir != null) {
                 File localFile = new File(contentDir, resolved);
                 if (localFile.exists()) {

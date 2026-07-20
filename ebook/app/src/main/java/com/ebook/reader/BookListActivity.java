@@ -14,17 +14,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ebook.reader.util.BookJsonParser;
 import com.ebook.reader.util.UpdateManager;
+import com.ebook.reader.util.VersionInfo;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BookListActivity extends AppCompatActivity {
 
     private final List<String> jsonFiles = new ArrayList<>();
+    private final List<String> bookIds = new ArrayList<>();
     private final List<String> bookNames = new ArrayList<>();
     private RecyclerView bookList;
     private View emptyState;
@@ -71,21 +70,16 @@ public class BookListActivity extends AppCompatActivity {
 
     private void loadBooks() {
         jsonFiles.clear();
+        bookIds.clear();
         bookNames.clear();
 
-        File contentDir = UpdateManager.getContentDir(this);
-        if (contentDir != null) {
-            String[] files = contentDir.list();
-            if (files != null) {
-                Arrays.sort(files);
-                for (String file : files) {
-                    if (file.endsWith(".json") && !"version.json".equals(file)) {
-                        String bookName = BookJsonParser.parseBookName(contentDir, file);
-                        if (bookName != null && !bookName.isEmpty()) {
-                            jsonFiles.add(file);
-                            bookNames.add(bookName);
-                        }
-                    }
+        VersionInfo manifest = UpdateManager.getLocalVersion(this);
+        if (manifest != null && manifest.books != null) {
+            for (VersionInfo.BookVersion book : manifest.books) {
+                if (UpdateManager.isBookInstalled(this, book)) {
+                    bookIds.add(book.id);
+                    jsonFiles.add(book.jsonFile);
+                    bookNames.add(book.name);
                 }
             }
         }
@@ -107,12 +101,14 @@ public class BookListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             String jsonFile = jsonFiles.get(position);
+            String bookId = bookIds.get(position);
             String bookName = bookNames.get(position);
             holder.title.setText(bookName);
             holder.subtitle.setText(jsonFile);
             holder.card.setOnClickListener(v -> {
                 Intent intent = new Intent(BookListActivity.this, ReaderActivity.class);
                 intent.putExtra("jsonFile", jsonFile);
+                intent.putExtra("bookId", bookId);
                 intent.putExtra("bookName", bookName);
                 startActivity(intent);
             });

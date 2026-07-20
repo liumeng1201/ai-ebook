@@ -215,37 +215,21 @@ public class SettingsActivity extends AppCompatActivity {
                                 Toast.makeText(SettingsActivity.this,
                                         "正在下载内容包...", Toast.LENGTH_SHORT).show();
                                 new Thread(() -> {
-                                    try {
-                                        List<UpdateManager.GitHubRelease> releases =
-                                                UpdateManager.fetchReleases();
-                                        if (releases != null) {
-                                            int contentVersion =
-                                                    UpdateManager.getLatestContentVersion(releases);
-                                            String url = UpdateManager.getContentBundleUrl(
-                                                    releases, contentVersion);
-                                            if (url != null) {
-                                                boolean success = UpdateManager.downloadContentBundle(
-                                                        SettingsActivity.this, url, contentVersion);
-                                                runOnUiThread(() -> {
-                                                    if (success) {
-                                                        loadVersionInfo();
-                                                        updateLastCheckTime();
-                                                        Toast.makeText(SettingsActivity.this,
-                                                                "内容更新完成，重启后生效",
-                                                                Toast.LENGTH_LONG).show();
-                                                    } else {
-                                                        Toast.makeText(SettingsActivity.this,
-                                                                "内容更新失败，请稍后重试",
-                                                                Toast.LENGTH_LONG).show();
-                                                    }
-                                                });
-                                            }
+                                    UpdateManager.ContentUpdateResult result =
+                                            UpdateManager.downloadContentUpdates(SettingsActivity.this);
+                                    runOnUiThread(() -> {
+                                        loadVersionInfo();
+                                        updateLastCheckTime();
+                                        if (result.isSuccess()) {
+                                            Toast.makeText(SettingsActivity.this,
+                                                    "内容更新完成：" + result.updatedBookIds.size() + " 本书",
+                                                    Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(SettingsActivity.this,
+                                                    "部分内容更新失败，请稍后重试",
+                                                    Toast.LENGTH_LONG).show();
                                         }
-                                    } catch (Exception e) {
-                                        runOnUiThread(() -> Toast.makeText(SettingsActivity.this,
-                                                "内容更新失败，请稍后重试",
-                                                Toast.LENGTH_LONG).show());
-                                    }
+                                    });
                                 }).start();
                             })
                             .setNegativeButton("稍后", null)

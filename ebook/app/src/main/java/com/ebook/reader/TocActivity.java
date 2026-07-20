@@ -27,6 +27,7 @@ public class TocActivity extends AppCompatActivity {
     private List<TocDisplayItem> visibleItems = new ArrayList<>();
     private String currentHerf;
     private String jsonFile;
+    private String bookId;
     private TocAdapter adapter;
     private int verticalPaddingPx;
 
@@ -51,6 +52,7 @@ public class TocActivity extends AppCompatActivity {
         setContentView(R.layout.activity_toc);
 
         jsonFile = getIntent().getStringExtra("jsonFile");
+        bookId = getIntent().getStringExtra("bookId");
         currentHerf = getIntent().getStringExtra("currentHerf");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,7 +70,7 @@ public class TocActivity extends AppCompatActivity {
         tocList.setLayoutManager(new LinearLayoutManager(this));
 
         try {
-            tocTree = BookJsonParser.parseTocTree(UpdateManager.openContent(this, jsonFile));
+            tocTree = BookJsonParser.parseTocTree(UpdateManager.openContent(this, bookId, jsonFile));
         } catch (Exception e) {
             finish();
             return;

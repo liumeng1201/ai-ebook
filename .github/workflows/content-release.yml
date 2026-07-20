@@ -7,10 +7,10 @@ on:
       - 'data-preprocess/easy-vibe.json'
       - 'data-preprocess/vibe-vibe.json'
       - 'data-preprocess/sync_assets.py'
-      - 'ai-coding-guide'
-      - 'easy-vibe'
-      - 'vibe-vibe'
-      - 'CodexGuide'
+      - 'ai-coding-guide/**'
+      - 'easy-vibe/**'
+      - 'vibe-vibe/**'
+      - 'CodexGuide/**'
       - '.github/workflows/content-release.yml'
   workflow_dispatch:
 
@@ -30,13 +30,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Sync content assets
-        run: python data-preprocess/sync_assets.py
-
-      - name: Package content bundle
-        run: |
-          cd ebook/app/src/main/assets
-          zip -r $GITHUB_WORKSPACE/content-bundle.zip . -x ".gitkeep" ".gitignore"
+      - name: Build split content packages
+        env:
+          CONTENT_RELEASE_TAG: content-${{ github.run_number }}
+        run: python data-preprocess/sync_assets.py --output-dir "$GITHUB_WORKSPACE/content-release" --release-tag "$CONTENT_RELEASE_TAG"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -49,6 +46,6 @@ jobs:
             ${{ github.event.head_commit.message || '手动触发更新' }}
 
             ## 内容版本
-            更新内容详见 `version.json`
-          files: content-bundle.zip
+            更新内容详见 `manifest.json`；每本书均为独立内容包。
+          files: content-release/*
           generate_release_notes: false

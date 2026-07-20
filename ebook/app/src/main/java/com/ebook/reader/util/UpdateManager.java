@@ -59,7 +59,7 @@ public class UpdateManager {
     static final String ACTION_CANCEL_DOWNLOAD = "com.ebook.reader.action.CANCEL_DOWNLOAD";
     static final String EXTRA_NOTIFICATION_ID = "notification_id";
     private static final String PREFS_NAME = "update_prefs";
-    private static final String KEY_CURRENT_VERSION = "current_content_version";
+    private static final String KEY_BOOK_VERSION_PREFIX = "book_version_";
     private static final int DOWNLOAD_CONNECT_TIMEOUT_MS = 30000;
     private static final int DOWNLOAD_READ_TIMEOUT_MS = 120000;
     private static final int DOWNLOAD_RETRY_COUNT = 3;
@@ -71,9 +71,9 @@ public class UpdateManager {
     private static final ConcurrentHashMap<Integer, HttpURLConnection> ACTIVE_DOWNLOADS =
             new ConcurrentHashMap<>();
 
-    private static final String STAGING_DIR = "content-staging";
-    private static final String CURRENT_DIR = "content-current";
-    private static final String VERSION_FILE = "version.json";
+    private static final String CONTENT_DIR = "content";
+    private static final String BOOKS_DIR = "books";
+    private static final String MANIFEST_FILE = "manifest.json";
 
     public enum UpdateType { APP, CONTENT, BOTH }
 
@@ -89,13 +89,13 @@ public class UpdateManager {
     // ============================================================
 
     public static VersionInfo getLocalVersion(Context context) {
-        File localVersion = new File(new File(context.getFilesDir(), CURRENT_DIR), VERSION_FILE);
+        File localVersion = new File(getContentRoot(context), MANIFEST_FILE);
         if (localVersion.exists()) {
             try (InputStream is = new FileInputStream(localVersion)) {
                 String json = readStream(is);
                 return new Gson().fromJson(json, VersionInfo.class);
             } catch (Exception e) {
-                Log.w(TAG, "无法读取已下载内容的 version.json", e);
+                Log.w(TAG, "无法读取已下载内容的 manifest.json", e);
             }
         }
         return null;
@@ -189,14 +189,11 @@ public class UpdateManager {
                     return;
                 }
 
-                int latestContent = getLatestContentVersion(releases);
-                int storedContent = getStoredContentVersion(context);
-
+                VersionInfo manifest = fetchLatestManifest(releases);
                 recordManualCheckTime(context);
-
-                if (latestContent > storedContent) {
+                if (manifest != null && hasContentUpdates(context, manifest)) {
                     callback.onUpdateAvailable(UpdateType.CONTENT,
-                            "content-" + latestContent, "");
+                            "content-" + manifest.generatedAt, "");
                 } else {
                     callback.onNoUpdate();
                 }
@@ -211,55 +208,66 @@ public class UpdateManager {
     // 3. 内容下载与安装
     // ============================================================
 
-    public static boolean downloadContentBundle(Context context, String url, int version) {
-        boolean success = false;
+    /** 下载最新配置并仅安装版本变化的书籍。单本失败不会回滚其他已成功书籍。 */
+    public static ContentUpdateResult downloadContentUpdates(Context context) {
+        ContentUpdateResult result = new ContentUpdateResult();
         try {
-            Log.d(TAG, "下载内容包: " + url);
+            VersionInfo manifest = fetchLatestManifest(fetchReleases());
+            if (manifest == null || manifest.books == null) {
+                throw new IOException("内容配置文件无效");
+            }
+            saveManifest(context, manifest);
+            for (VersionInfo.BookVersion book : manifest.books) {
+                if (book.id == null || book.jsonFile == null || book.downloadUrl == null) continue;
+                if (isBookInstalled(context, book) && !needsBookUpdate(context, book)) continue;
+                if (downloadBookBundle(context, book)) result.updatedBookIds.add(book.id);
+                else result.failedBookIds.add(book.id);
+            }
+            recordManualCheckTime(context);
+        } catch (Exception e) {
+            Log.e(TAG, "内容更新失败", e);
+            result.errorMessage = e.getMessage();
+        }
+        return result;
+    }
 
+    private static boolean downloadBookBundle(Context context, VersionInfo.BookVersion book) {
+        File currentDir = getBookDir(context, book.id);
+        File backupDir = new File(currentDir.getParentFile(), book.id + "-backup");
+        try {
             File cacheDir = new File(context.getCacheDir(), "downloads");
             cacheDir.mkdirs();
-            File zipFile = new File(cacheDir, "content-bundle-" + version + ".zip");
+            File zipFile = new File(cacheDir, book.id + ".zip");
+            downloadFile(context, book.downloadUrl, zipFile, "下载 " + book.name,
+                    NOTIFICATION_ID_CONTENT);
 
-            downloadFile(context, url, zipFile, "内容包下载", NOTIFICATION_ID_CONTENT);
-
-            File stagingDir = new File(context.getFilesDir(), STAGING_DIR);
+            File booksDir = new File(getContentRoot(context), BOOKS_DIR);
+            booksDir.mkdirs();
+            File stagingDir = new File(booksDir, book.id + "-staging");
             if (stagingDir.exists()) deleteDir(stagingDir);
             stagingDir.mkdirs();
-
             unzip(zipFile, stagingDir);
-
-            File remoteVersionFile = new File(stagingDir, VERSION_FILE);
-            if (!remoteVersionFile.exists()) {
-                throw new IOException("Content bundle is missing version.json");
+            if (!new File(stagingDir, book.jsonFile).isFile()) {
+                throw new IOException("书籍内容包缺少目录文件: " + book.jsonFile);
             }
-            try (InputStream is = new FileInputStream(remoteVersionFile)) {
-                if (new Gson().fromJson(readStream(is), VersionInfo.class) == null) {
-                    throw new IOException("Content bundle version.json is invalid");
-                }
+            currentDir = new File(booksDir, book.id);
+            backupDir = new File(booksDir, book.id + "-backup");
+            if (backupDir.exists()) deleteDir(backupDir);
+            if (currentDir.exists() && !currentDir.renameTo(backupDir)) {
+                throw new IOException("无法备份旧书籍内容");
             }
-
-            File currentDir = new File(context.getFilesDir(), CURRENT_DIR);
-            File currentDirBackup = new File(context.getFilesDir(), CURRENT_DIR + "-backup");
-
-            if (currentDir.exists()) {
-                if (currentDirBackup.exists()) deleteDir(currentDirBackup);
-                currentDir.renameTo(currentDirBackup);
-            }
-
-            if (!stagingDir.renameTo(currentDir)) {
-                throw new IOException("无法切换内容目录");
-            }
-
-            if (currentDirBackup.exists()) deleteDir(currentDirBackup);
+            if (!stagingDir.renameTo(currentDir)) throw new IOException("无法切换书籍内容");
+            if (backupDir.exists()) deleteDir(backupDir);
             zipFile.delete();
-            setStoredContentVersion(context, version);
-            success = true;
-
-            Log.d(TAG, "内容更新安装完成");
+            setBookVersion(context, book.id, book.contentVersion);
+            return true;
         } catch (Exception e) {
-            Log.e(TAG, "内容更新下载/安装失败", e);
+            if (!currentDir.exists() && backupDir.exists()) {
+                backupDir.renameTo(currentDir);
+            }
+            Log.e(TAG, "书籍更新失败: " + book.id, e);
+            return false;
         }
-        return success;
     }
 
     public static void downloadAndInstallApk(Context context, String downloadUrl) {
@@ -303,7 +311,7 @@ public class UpdateManager {
      */
     public static void installContentUpdate(Context context, int version, String downloadUrl) {
         new Thread(() -> {
-            downloadContentBundle(context, downloadUrl, version);
+            downloadContentUpdates(context);
         }).start();
     }
 
@@ -311,18 +319,22 @@ public class UpdateManager {
     // 4. 内容文件读取
     // ============================================================
 
-    public static InputStream openContent(Context context, String assetPath) throws IOException {
-        File localFile = new File(new File(context.getFilesDir(), CURRENT_DIR), assetPath);
+    public static InputStream openContent(Context context, String bookId, String assetPath) throws IOException {
+        File localFile = new File(getBookDir(context, bookId), assetPath);
         if (localFile.exists()) {
             return new FileInputStream(localFile);
         }
         throw new IOException("内容包未下载或内容文件不存在: " + assetPath);
     }
 
-    public static File getContentDir(Context context) {
-        File current = new File(context.getFilesDir(), CURRENT_DIR);
-        if (current.exists()) return current;
-        return null;
+    public static File getBookDir(Context context, String bookId) {
+        return new File(new File(getContentRoot(context), BOOKS_DIR), bookId);
+    }
+
+    public static boolean isBookInstalled(Context context, VersionInfo.BookVersion book) {
+        return book != null && book.id != null
+                && getBookDir(context, book.id).isDirectory()
+                && new File(getBookDir(context, book.id), book.jsonFile).isFile();
     }
 
     // ============================================================
@@ -339,46 +351,72 @@ public class UpdateManager {
                 .getLong("manual_check_time", 0);
     }
 
-    private static int getStoredContentVersion(Context context) {
-        return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .getInt(KEY_CURRENT_VERSION, 0);
+    private static File getContentRoot(Context context) {
+        return new File(context.getFilesDir(), CONTENT_DIR);
     }
 
-    private static void setStoredContentVersion(Context context, int version) {
+    private static String getBookVersion(Context context, String bookId) {
+        return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                .getString(KEY_BOOK_VERSION_PREFIX + bookId, null);
+    }
+
+    private static void setBookVersion(Context context, String bookId, String version) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit().putInt(KEY_CURRENT_VERSION, version).apply();
+                .edit().putString(KEY_BOOK_VERSION_PREFIX + bookId, version).apply();
+    }
+
+    private static boolean needsBookUpdate(Context context, VersionInfo.BookVersion book) {
+        return book.contentVersion == null || !book.contentVersion.equals(getBookVersion(context, book.id));
+    }
+
+    private static boolean hasContentUpdates(Context context, VersionInfo manifest) {
+        for (VersionInfo.BookVersion book : manifest.books) {
+            if (!isBookInstalled(context, book) || needsBookUpdate(context, book)) return true;
+        }
+        return false;
     }
 
     /**
      * 从 releases 列表中提取最新 content 版本号
      */
-    public static int getLatestContentVersion(List<GitHubRelease> releases) {
-        int max = 0;
+    private static VersionInfo fetchLatestManifest(List<GitHubRelease> releases) throws IOException {
+        GitHubRelease newest = null;
+        int max = -1;
         for (GitHubRelease r : releases) {
             if (r.tagName != null && r.tagName.startsWith("content-")) {
                 try {
                     int v = Integer.parseInt(r.tagName.substring(8));
-                    if (v > max) max = v;
+                    if (v > max) { max = v; newest = r; }
                 } catch (NumberFormatException ignored) {}
             }
         }
-        return max;
+        if (newest == null || newest.assets == null) return null;
+        for (GitHubAsset asset : newest.assets) {
+            if ("manifest.json".equals(asset.name)) {
+                VersionInfo manifest = new Gson().fromJson(
+                        httpGet(withGitHubProxy(asset.browserDownloadUrl)), VersionInfo.class);
+                if (manifest == null || manifest.schemaVersion < 2 || manifest.books == null) {
+                    throw new IOException("manifest.json 格式不受支持");
+                }
+                return manifest;
+            }
+        }
+        return null;
     }
 
     /**
      * 获取 content release 的下载链接
      */
-    private static String getContentDownloadUrlFromReleases(
-            List<GitHubRelease> releases, int version) {
-        String targetTag = "content-" + version;
-        for (GitHubRelease r : releases) {
-            if (targetTag.equals(r.tagName)) {
-                if (r.assets != null && !r.assets.isEmpty()) {
-                    return r.assets.get(0).browserDownloadUrl;
-                }
-            }
+    private static void saveManifest(Context context, VersionInfo manifest) throws IOException {
+        File root = getContentRoot(context);
+        root.mkdirs();
+        File staging = new File(root, MANIFEST_FILE + ".staging");
+        try (OutputStream os = new FileOutputStream(staging)) {
+            os.write(new Gson().toJson(manifest).getBytes("UTF-8"));
         }
-        return null;
+        File dest = new File(root, MANIFEST_FILE);
+        if (dest.exists() && !dest.delete()) throw new IOException("无法替换本地内容配置");
+        if (!staging.renameTo(dest)) throw new IOException("无法保存本地内容配置");
     }
 
     /**
@@ -400,8 +438,14 @@ public class UpdateManager {
     /**
      * 从 releases 中获取指定内容版本的下载 URL
      */
-    public static String getContentBundleUrl(List<GitHubRelease> releases, int contentVersion) {
-        return getContentDownloadUrlFromReleases(releases, contentVersion);
+    public static class ContentUpdateResult {
+        public final List<String> updatedBookIds = new ArrayList<>();
+        public final List<String> failedBookIds = new ArrayList<>();
+        public String errorMessage;
+
+        public boolean isSuccess() {
+            return errorMessage == null && failedBookIds.isEmpty();
+        }
     }
 
     // ============================================================
